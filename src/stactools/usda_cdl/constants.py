@@ -9,9 +9,9 @@ CLASSIFICATION_SCHEMA = (
 )
 
 # Collection
-COLLECTION_ID = "cdl"
+COLLECTION_ID = "usda-cdl"
 COLLECTION_TITLE = "USDA Cropland Data Layer"
-COLLECTION_DESCRIPTION = "The CDL is a crop-specific land cover classification product of more than 100 crop categories grown in the United States. CDLs are derived using a supervised land cover classification of satellite imagery. The supervised classification relies on first manually identifying pixels within certain images, often called training sites, which represent the same crop or land cover type. Using these training sites, a spectral signature is developed for each crop type that is then used by the analysis software to identify all other pixels in the satellite image representing the same crop. Using this method, a new CDL is compiled annually and released to the public a few months after the end of the growing season."  # noqa
+COLLECTION_DESCRIPTION = "The USDA Cropland Data Layer (CDL) is a crop-specific land cover classification product of more than 100 crop categories grown in the United States. CDLs are derived using a supervised land cover classification of satellite imagery. The supervised classification relies on first manually identifying pixels within certain images, often called training sites, which represent the same crop or land cover type. Using these training sites, a spectral signature is developed for each crop type that is then used by the analysis software to identify all other pixels in the satellite image representing the same crop. Using this method, a new CDL is compiled annually and released to the public a few months after the end of the growing season."  # noqa
 PROVIDERS = [
     Provider(
         name="USDA-NASS",
@@ -39,7 +39,7 @@ ITEM_DESCRIPTION = {
 
 # Assets
 ASSET_PROPS: Dict[str, Any] = {
-    "title": "CDL",
+    "title": "USDA CDL",
     "description": "USDA Cropland Data Classifications",  # noqa
     "type": "image/tiff; application=geotiff; profile=cloud-optimized",
     "roles": ["data"],

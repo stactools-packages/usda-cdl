@@ -3,22 +3,22 @@ import logging
 import click
 from click import Command, Group
 
-from stactools.cdl import stac
+from stactools.usda_cdl import stac
 
 logger = logging.getLogger(__name__)
 
 
-def create_cdl_command(cli: Group) -> Command:
-    """Creates the stactools-cdl command line utility."""
+def create_usdacdl_command(cli: Group) -> Command:
+    """Creates the stactools-usda-cdl command line utility."""
 
     @cli.group(
-        "cdl",
-        short_help=("Commands for working with stactools-cdl"),
+        "usdacdl",
+        short_help=("Commands for working with stactools-usda-cdl"),
     )
-    def cdl() -> None:
+    def usdacdl() -> None:
         pass
 
-    @cdl.command(
+    @usdacdl.command(
         "create-collection",
         short_help="Creates a STAC collection",
     )
@@ -37,7 +37,7 @@ def create_cdl_command(cli: Group) -> Command:
 
         return None
 
-    @cdl.command("create-item", short_help="Create a STAC item")
+    @usdacdl.command("create-item", short_help="Create a STAC item")
     @click.argument("source")
     @click.argument("destination")
     def create_item_command(source: str, destination: str) -> None:
@@ -53,4 +53,4 @@ def create_cdl_command(cli: Group) -> Command:
 
         return None
 
-    return cdl
+    return usdacdl

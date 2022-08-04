@@ -1,4 +1,4 @@
-from stactools.cdl import stac
+from stactools.usda_cdl import stac
 
 
 def test_create_collection() -> None:

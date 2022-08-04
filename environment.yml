@@ -1,4 +1,4 @@
-name: stactools-cdl
+name: stactools-usda-cdl
 channels:
   - conda-forge
   - defaults

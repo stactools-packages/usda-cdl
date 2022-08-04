@@ -1,19 +1,18 @@
-# stactools-cdl
+# stactools-usda-cdl
 
-[![PyPI](https://img.shields.io/pypi/v/stactools-cdl)](https://pypi.org/project/stactools-cdl/)
+[![PyPI](https://img.shields.io/pypi/v/stactools-usda-cdl)](https://pypi.org/project/stactools-usda-cdl/)
 
-- Name: cdl
-- Package: `stactools.cdl`
-- PyPI: https://pypi.org/project/stactools-cdl/
+- Name: usda-cdl
+- Package: `stactools.usda_cdl`
+- PyPI: https://pypi.org/project/stactools-usda-cdl/
 - Owner: @pholleway
 - Dataset homepage: http://example.com
 - STAC extensions used:
   - [proj](https://github.com/stac-extensions/projection/)
-- Extra fields:
-  - `cdl:custom`: A custom attribute
 
-The stactools-cdl package generates STAC Items and Collections for the USDA Cropland Data Layer. 
+The stactools-usda-cdl package generates STAC Items and Collections for the USDA Cropland Data Layer (CDL). 
 
+The USDA CDLs provides data for 2008 through 2021 in geodatabase form. This package assumes a raster has been extracted and tiled into smaller cloud optimized GeoTIFF (COG) image files. The tile filenames are expected to contain the prefix `USDA_CDL_{year}`.
 ## STAC Examples
 
 - [Collection](examples/collection.json)
@@ -21,7 +20,7 @@ The stactools-cdl package generates STAC Items and Collections for the USDA Crop
 
 ## Installation
 ```shell
-pip install stactools-cdl
+pip install stactools-usda-cdl
 ```
 
 ## Command-line Usage
@@ -29,10 +28,10 @@ pip install stactools-cdl
 Description of the command line functions
 
 ```shell
-$ stac cdl create-item source destination
+$ stac usda-cdl create-item source destination
 ```
 
-Use `stac cdl --help` to see all subcommands and options.
+Use `stac usda-cdl --help` to see all subcommands and options.
 
 ## Contributing
 
