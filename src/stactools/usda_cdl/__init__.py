@@ -11,7 +11,7 @@ stactools.core.use_fsspec()
 def register_plugin(registry: Registry) -> None:
     from stactools.usda_cdl import commands
 
-    registry.register_subcommand(commands.create_usdacdl_command)
+    registry.register_subcommand(commands.create_usda_cdl_command)
 
 
 __version__ = "0.1.0"

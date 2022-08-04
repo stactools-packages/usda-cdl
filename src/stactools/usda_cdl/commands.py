@@ -8,17 +8,17 @@ from stactools.usda_cdl import stac
 logger = logging.getLogger(__name__)
 
 
-def create_usdacdl_command(cli: Group) -> Command:
+def create_usda_cdl_command(cli: Group) -> Command:
     """Creates the stactools-usda-cdl command line utility."""
 
     @cli.group(
-        "usdacdl",
+        "usda-cdl",
         short_help=("Commands for working with stactools-usda-cdl"),
     )
-    def usdacdl() -> None:
+    def usda_cdl() -> None:
         pass
 
-    @usdacdl.command(
+    @usda_cdl.command(
         "create-collection",
         short_help="Creates a STAC collection",
     )
@@ -37,7 +37,7 @@ def create_usdacdl_command(cli: Group) -> Command:
 
         return None
 
-    @usdacdl.command("create-item", short_help="Create a STAC item")
+    @usda_cdl.command("create-item", short_help="Create a STAC item")
     @click.argument("source")
     @click.argument("destination")
     def create_item_command(source: str, destination: str) -> None:
@@ -53,4 +53,4 @@ def create_usdacdl_command(cli: Group) -> Command:
 
         return None
 
-    return usdacdl
+    return usda_cdl
