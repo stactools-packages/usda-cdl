@@ -1,5 +1,5 @@
-import stactools.ephemeral
+import stactools.usda_cdl
 
 
 def test_version() -> None:
-    assert stactools.ephemeral.__version__ is not None
+    assert stactools.usda_cdl.__version__ is not None
