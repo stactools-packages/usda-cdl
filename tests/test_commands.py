@@ -1,4 +1,4 @@
-import os.path
+import glob
 from tempfile import TemporaryDirectory
 from typing import Callable, List
 
@@ -7,47 +7,62 @@ from click import Command, Group
 from stactools.testing.cli_test import CliTestCase
 
 from stactools.usda_cdl.commands import create_usda_cdl_command
+from tests import test_data
 
 
 class CommandsTest(CliTestCase):
     def create_subcommand_functions(self) -> List[Callable[[Group], Command]]:
         return [create_usda_cdl_command]
 
-    def test_create_collection(self) -> None:
+    def test_create_usda_cdl_items(self) -> None:
+        nc_href = test_data.get_path("data-files/netcdf/monthly/nclimgrid_prcp.nc")
         with TemporaryDirectory() as tmp_dir:
-            # Run your custom create-collection command and validate
+            cmd = f"usda-cdl create-items {nc_href} {tmp_dir} {tmp_dir}"
+            self.run_command(cmd)
 
-            # Example:
-            destination = os.path.join(tmp_dir, "collection.json")
+            cog_files = glob.glob(f"{tmp_dir}/*tif")
+            assert len(cog_files) == 8
+            item_files = glob.glob(f"{tmp_dir}/*.json")
+            assert len(item_files) == 2
 
-            result = self.run_command(f"usda-cdl create-collection {destination}")
+            for item_file in item_files:
+                item = pystac.read_file(item_file)
+                item.validate()
 
-            assert result.exit_code == 0, "\n{}".format(result.output)
+    def test_create_usda_cdl_ancillary_items(self) -> None:
+        nc_href = test_data.get_path(
+            "data-files/netcdf/daily/beta/by-month/2022/01/prcp-202201-grd-prelim.nc"
+        )
+        with TemporaryDirectory() as tmp_dir:
+            cmd = f"usda-cdl create-items {nc_href} {tmp_dir} {tmp_dir}"
+            self.run_command(cmd)
 
-            jsons = [p for p in os.listdir(tmp_dir) if p.endswith(".json")]
-            assert len(jsons) == 1
+            cog_files = glob.glob(f"{tmp_dir}/*tif")
+            assert len(cog_files) == 4
+            item_files = glob.glob(f"{tmp_dir}/*.json")
+            assert len(item_files) == 1
 
-            collection = pystac.read_file(destination)
-            assert collection.id == "my-collection-id"
-            # assert collection.other_attr...
+            for item_file in item_files:
+                item = pystac.read_file(item_file)
+                item.validate()
 
+    def test_create_monthly_collection(self) -> None:
+        with TemporaryDirectory() as tmp_dir:
+            file_list_path = f"{tmp_dir}/test_monthly.txt"
+            with open(file_list_path, "w") as f:
+                f.write(
+                    test_data.get_path("data-files/netcdf/monthly/nclimgrid_prcp.nc")
+                )
+
+            cmd = f"usda-cdl create-collection {file_list_path} {tmp_dir}"
+            self.run_command(cmd)
+
+            item_paths = ["monthly/nclimgrid-189501", "monthly/nclimgrid-189502"]
+            for item_path in item_paths:
+                item_files = glob.glob(f"{tmp_dir}/{item_path}/*.json")
+                assert len(item_files) == 1
+                cog_files = glob.glob(f"{tmp_dir}/{item_path}/*.tif")
+                assert len(cog_files) == 4
+
+            collection = pystac.read_file(f"{tmp_dir}/monthly/collection.json")
             collection.validate()
-
-    def test_create_item(self) -> None:
-        with TemporaryDirectory() as tmp_dir:
-            # Run your custom create-item command and validate
-
-            # Example:
-            infile = "/path/to/asset.tif"
-            destination = os.path.join(tmp_dir, "item.json")
-            result = self.run_command(f"usda-cdl create-item {infile} {destination}")
-            assert result.exit_code == 0, "\n{}".format(result.output)
-
-            jsons = [p for p in os.listdir(tmp_dir) if p.endswith(".json")]
-            assert len(jsons) == 1
-
-            item = pystac.read_file(destination)
-            assert item.id == "my-item-id"
-            # assert item.other_attr...
-
-            item.validate()
