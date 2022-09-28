@@ -1,6 +1,7 @@
 import os
+from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Dict, Optional
+from typing import Optional
 
 import stactools.core.create
 from pystac import Asset, Collection, Item, MediaType
@@ -10,6 +11,25 @@ from pystac.utils import make_absolute_href
 from stactools.usda_cdl import constants
 from stactools.usda_cdl.constants import Frequency, Variable
 from stactools.usda_cdl.utils import cog_asset_dict, data_frequency
+
+
+@dataclass(frozen=True)
+class Filename:
+    variable: Variable
+    year: int
+
+    @classmethod
+    def parse(cls, href: str, expected_variable: Variable) -> "Filename":
+        id = os.path.splitext(os.path.basename(href))[0]
+        parts = id.split("_")
+        variable = parts[1]
+        if variable != expected_variable:
+            raise ValueError(
+                f"expected '{expected_variable}, received '{variable}'"
+            )
+    
+        year = int(parts[2])
+        return cls(variable=variable, year=year)
 
 
 def create_base_item(cropland_href: str, confidence_href: Optional[str] = None) -> Item:
@@ -23,53 +43,39 @@ def create_base_item(cropland_href: str, confidence_href: Optional[str] = None) 
     Returns:
         Item: A STAC Item object.
     """
-    id = os.path.splitext(os.path.basename(cropland_href))[0]
-    parts = id.split("_")
-    variable = parts[1]
-    if variable != Variable.Cropland:
-        raise ValueError(
-            f"expected cropland, received {variable}"
-        )
-    cropland_year = int(parts[2])
+    cropland_filename = Filename.parse(cropland_href, Variable.Cropland)
 
     item = stactools.core.create.item(cropland_href)
     del item.assets["data"] 
 
-    item.common_metadata.start_datetime = datetime(cropland_year, 1, 1)
-    item.common_metadata.end_datetime = datetime(cropland_year, 12, 31, 23, 59, 59)
+    item.common_metadata.start_datetime = datetime(cropland_filename.year, 1, 1)
+    item.common_metadata.end_datetime = datetime(cropland_filename.year, 12, 31, 23, 59, 59)
     item.datetime = None
     item.common_metadata.created = datetime.now(tz=timezone.utc)
 
-    asset_title = f"{constants.COG_ASSET_TITLES[variable]} {cropland_year}"
+    asset_title = f"{constants.COG_ASSET_TITLES[cropland_filename.variable]} {cropland_filename.year}"
     asset = Asset(
         href=cropland_href,
         title=asset_title,
         media_type=MediaType.COG,
         roles=["data"]
     )
-    item.add_asset(variable, asset)
+    item.add_asset(cropland_filename.variable, asset)
 
     if confidence_href is not None:
-        id = os.path.splitext(os.path.basename(confidence_href))[0]
-        parts = id.split("_")
-        variable = parts[1]
-        if variable != Variable.Confidence:
+        confidence_filename = Filename.parse(confidence_href, Variable.Confidence)
+        if confidence_filename.year != cropland_filename.year:
             raise ValueError(
-                f"expected confidence, received {variable}"
-            )
-        confidence_year = int(parts[2])
-        if confidence_year != cropland_year:
-            raise ValueError(
-                f"cropland year ({cropland_year}) does not match "
-                f"confidence year ({confidence_year})")
-        asset_title = f"{constants.COG_ASSET_TITLES[variable]} {cropland_year}"
+                f"cropland year ({cropland_filename.year}) does not match "
+                f"confidence year ({confidence_filename.year})")
+        asset_title = f"{constants.COG_ASSET_TITLES[confidence_filename.variable]} {confidence_filename.year}"
         asset = Asset(
             href=confidence_href,
             title=asset_title,
             media_type=MediaType.COG,
             roles=["data"]
         )
-        item.add_asset(variable, asset)
+        item.add_asset(confidence_filename.variable, asset)
 
     return item
 
