@@ -1,45 +1,62 @@
-from stactools.usda_cdl import stac
-from stactools.usda_cdl.constants import Frequency, Variable
+import datetime
+
+from pystac import MediaType
+from dateutil.tz import tzutc
+
+import stactools.usda_cdl.stac
+
+import pytest
 from tests import test_data
 
 
-def test_create_single_item() -> None:
-    cog_hrefs = {
-        Variable.Cropland: test_data.get_path("data-files/usda_cdl_cropland_2021.tif"),
-        Variable.Confidence: test_data.get_path("data-files/usda_cdl_confidence_2021.tif")
-    }
-    item = stac.create_basic_items(cog_hrefs)
-    assert item.id == "x"
-    assert len(item.assets) == 4
-    item.validate()
-
-def test_create_single_item() -> None:
-    cog_hrefs = {
-        Variable.Cultivated: test_data.get_path("data-files/usda_cdl_ancillary_cultivated_2020.tif"),
-        Variable.Frequency_Corn: test_data.get_path("data-files/"),
-        Variable.Frequency_Cotton: test_data.get_path("data-files/"),
-        Variable.Frequency_Wheat: test_data.get_path("data-files/"),
-        Variable.Frequency_Soybean: test_data.get_path("data-files/"),
-    }
-    item = stac.create_ancillary_items(cog_hrefs)
-    assert item.id == "x"
-    assert len(item.assets) == 4
+def test_create_base_item_with_one_href() -> None:
+    path = test_data.get_path("data-files/basic_cropland_2020.tif")
+    item = stactools.usda_cdl.stac.create_base_item(path)
+    assert item.common_metadata.start_datetime == datetime.datetime(2020, 1, 1, tzinfo=tzutc())
+    assert item.common_metadata.end_datetime == datetime.datetime(
+        2020, 12, 31, 23, 59, 59, tzinfo=tzutc())
+    assert len(item.assets) == 1
+    asset = item.assets["cropland"]
+    assert asset.title == "Cropland Data Layer (CDL) 2020"
+    assert asset.media_type == MediaType.COG
+    assert asset.roles == ["data"]
     item.validate()
 
 
-def test_usda_cdl_collection() -> None:
-    collection = stac.create_collection(Frequency.USDA_CDL)
-    collection_dict = collection.to_dict()
-    assert collection.id == "usda-cdl"
-    assert collection_dict["item_assets"]["cropland"]["title"].startswith("CDL")
-    assert len(collection_dict["item_assets"]) == 8
+def test_create_base_item_with_one_href_2021() -> None:
+    path = test_data.get_path("data-files/basic_cropland_2021.tif")
+    item = stactools.usda_cdl.stac.create_base_item(path)
+    assert item.common_metadata.start_datetime == datetime.datetime(2021, 1, 1, tzinfo=tzutc())
+    assert item.common_metadata.end_datetime == datetime.datetime(
+        2021, 12, 31, 23, 59, 59, tzinfo=tzutc())
 
 
-def test_usda_cdl_ancillary_collection() -> None:
-    collection = stac.create_collection(Frequency.USDA_CDL_ANCILLARY)
-    collection_dict = collection.to_dict()
-    assert collection.id == "usda-cdl-ancillary"
-    assert collection_dict["item_assets"]["cropland"]["title"].startswith(
-        "CDL_Ancillary"
-    )
-    assert len(collection_dict["item_assets"]) == 4
+def test_create_base_item_with_two_hrefs() -> None:
+    cropland_path = test_data.get_path("data-files/basic_cropland_2020.tif")
+    confidence_path = test_data.get_path("data-files/basic_confidence_2020.tif")
+    item = stactools.usda_cdl.stac.create_base_item(cropland_path, confidence_path)
+    assert len(item.assets) == 2
+    asset = item.assets["confidence"]
+    assert asset.title == "Confidence 2020"
+    assert asset.media_type == MediaType.COG
+    assert asset.roles == ["data"]
+    item.validate()
+
+
+def test_create_base_item_two_different_years() -> None:
+    cropland_path = test_data.get_path("data-files/basic_cropland_2020.tif")
+    confidence_path = test_data.get_path("data-files/basic_confidence_2021.tif")
+    with pytest.raises(ValueError):
+        stactools.usda_cdl.stac.create_base_item(cropland_path, confidence_path)
+
+
+def test_create_base_item_with_incorrect_cropland_href() -> None:
+    path = test_data.get_path("data-files/basic_confidence_2020.tif")
+    with pytest.raises(ValueError):
+        stactools.usda_cdl.stac.create_base_item(path)
+
+
+def test_create_base_item_with_incorrect_confidence_href() -> None:
+    path = test_data.get_path("data-files/basic_cropland_2020.tif")
+    with pytest.raises(ValueError):
+        stactools.usda_cdl.stac.create_base_item(path, path)

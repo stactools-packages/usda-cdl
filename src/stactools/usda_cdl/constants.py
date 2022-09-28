@@ -6,8 +6,8 @@ from pystac import Extent, Link, Provider, ProviderRole, SpatialExtent, Temporal
 
 
 class Frequency(str, Enum):  # update to collection
-    USDA_CDL = "cdl"
-    USDA_CDL_ANCILLARY = "cdl_ancillary"
+    base = "base"
+    ancillary = "ancillary"
 
 
 class Variable(str, Enum):

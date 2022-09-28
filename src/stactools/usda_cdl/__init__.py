@@ -1,9 +1,9 @@
 import stactools.core
 from stactools.cli.registry import Registry
 
-from stactools.usda_cdl.stac import create_collection, create_items
+from stactools.usda_cdl.stac import create_collection, create_base_item, create_ancillary_item
 
-__all__ = ["create_items", "create_collection"]
+__all__ = ["create_base_item", "create_ancillary_item", "create_collection"]
 
 stactools.core.use_fsspec()
 
