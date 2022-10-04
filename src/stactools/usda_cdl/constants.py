@@ -14,20 +14,20 @@ class Variable(str, Enum):
     Cropland = "cropland"
     Confidence = "confidence"
     Cultivated = "cultivated"
-    Frequency_Corn = "frequency_corn"
-    Frequency_Cotton = "frequency_cotton"
-    Frequency_Wheat = "frequency_wheat"
-    Frequency_Soybean = "frequency_soybean"
+    Corn = "corn"
+    Cotton = "cotton"
+    Soybean = "soybean"
+    Wheat = "wheat"
 
 
 COG_ASSET_TITLES = {
     Variable.Cropland: "Cropland Data Layer (CDL)",
     Variable.Confidence: "Confidence",
     Variable.Cultivated: "Cultivated",
-    Variable.Frequency_Corn: "Frequency, Corn",
-    Variable.Frequency_Cotton: "Frequency, Cotton",
-    Variable.Frequency_Wheat: "Frequency, Wheat",
-    Variable.Frequency_Soybean: "Frequency, Soyhean",
+    Variable.Corn: "Corn",
+    Variable.Cotton: "Cotton",
+    Variable.Soybean: "Soybean",
+    Variable.Wheat: "Wheat",
 }
 COG_ROLES = ["data"]
 COG_RASTER_BANDS = {
@@ -52,28 +52,28 @@ COG_RASTER_BANDS = {
             "spatial_resolution": 30,
         }
     ],
-    Variable.Frequency_Corn: [
+    Variable.Corn: [
         {
             "data_type": "uint8",
             "nodata": "nan",
             "spatial_resolution": 30,
         }
     ],
-    Variable.Frequency_Cotton: [
+    Variable.Cotton: [
         {
             "data_type": "uint8",
             "nodata": "nan",
             "spatial_resolution": 30,
         }
     ],
-    Variable.Frequency_Soybean: [
+    Variable.Soybean: [
         {
             "data_type": "uint8",
             "nodata": "nan",
             "spatial_resolution": 30,
         }
     ],
-    Variable.Frequency_Wheat: [
+    Variable.Wheat: [
         {
             "data_type": "uint8",
             "nodata": "nan",
