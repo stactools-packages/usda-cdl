@@ -8,7 +8,9 @@ import stactools.usda_cdl.stac
 import pytest
 from tests import test_data
 
-#create_basic_item
+# create_basic_item
+
+
 def test_create_cropland_item_with_one_href() -> None:
     path = test_data.get_path("data-files/basic_cropland_2020.tif")
     item = stactools.usda_cdl.stac.create_cropland_item(path)
@@ -61,7 +63,9 @@ def test_create_cropland_item_with_incorrect_confidence_href() -> None:
     with pytest.raises(ValueError):
         stactools.usda_cdl.stac.create_cropland_item(path, path)
 
-#create_ancillary_item
+# create_ancillary_item
+
+
 def test_create_cultivated_item_with_one_href() -> None:
     path = test_data.get_path("data-files/ancillary_cultivated_2021.tif")
     item = stactools.usda_cdl.stac.create_cultivated_item(path)
@@ -72,11 +76,15 @@ def test_create_cultivated_item_with_one_href() -> None:
     assert asset.roles == ["data"]
     item.validate()
 
+
 def test_create_frequency_item_with_four_href() -> None:
     corn_path = test_data.get_path("data-files/ancillary_corn_2021.tif")
     cotton_path = test_data.get_path("data-files/ancillary_cotton_2021.tif")
     soybean_path = test_data.get_path("data-files/ancillary_soybean_2021.tif")
     wheat_path = test_data.get_path("data-files/ancillary_wheat_2021.tif")
-    item = stactools.usda_cdl.stac.create_frequency_item(corn_path, cotton_path, soybean_path, wheat_path)
+    item = stactools.usda_cdl.stac.create_frequency_item(
+        corn_path, cotton_path, soybean_path, wheat_path)
     assert len(item.assets) == 4
     item.validate()
+
+    # TODO what happens if frequency files with different years are put on the same item?

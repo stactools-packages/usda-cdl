@@ -128,48 +128,26 @@ def create_frequency_item(
     Returns:
         Item: A STAC Item object.
     """
-    corn_filename = Filename.parse(corn_href, Variable.Corn)
-
     item = stactools.core.create.item(corn_href)
     del item.assets["data"]
 
-    asset_title = f"{constants.COG_ASSET_TITLES[corn_filename.variable]}"
-    asset = Asset(
-        href=corn_href,
-        title=asset_title,
-        media_type=MediaType.COG,
-        roles=["data"]
-    )
-    item.add_asset(corn_filename.variable, asset)
+    item = _add_asset(item, corn_href, Variable.Corn)
+    item = _add_asset(item, cotton_href, Variable.Cotton)
+    item = _add_asset(item, soybean_href, Variable.Soybean)
+    item = _add_asset(item, wheat_href, Variable.Wheat)
 
-    cotton_filename = Filename.parse(cotton_href, Variable.Cotton)
-    asset_title = f"{constants.COG_ASSET_TITLES[cotton_filename.variable]}"
-    asset = Asset(
-        href=cotton_href,
-        title=asset_title,
-        media_type=MediaType.COG,
-        roles=["data"]
-    )
-    item.add_asset(cotton_filename.variable, asset)
+    return item
 
-    soybean_filename = Filename.parse(soybean_href, Variable.Soybean)
-    asset_title = f"{constants.COG_ASSET_TITLES[soybean_filename.variable]}"
-    asset = Asset(
-        href=soybean_href,
-        title=asset_title,
-        media_type=MediaType.COG,
-        roles=["data"]
-    )
-    item.add_asset(soybean_filename.variable, asset)
 
-    wheat_filename = Filename.parse(wheat_href, Variable.Wheat)
-    asset_title = f"{constants.COG_ASSET_TITLES[wheat_filename.variable]}"
+def _add_asset(item: Item, href: str, variable: Variable) -> Item:
+    # TODO check year
+    asset_title = f"{constants.COG_ASSET_TITLES[variable]}"
     asset = Asset(
-        href=wheat_href,
+        href=href,
         title=asset_title,
         media_type=MediaType.COG,
         roles=["data"]
     )
-    item.add_asset(wheat_filename.variable, asset)
+    item.add_asset(variable, asset)
 
     return item
