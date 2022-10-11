@@ -30,7 +30,7 @@ class Variable(str, Enum):
 
 
 class CollectionType(str, Enum):
-    Basic = "basic"
+    CDL = "cdl"
     Cultivated = "cultivated"
     Frequency = "frequency"
 
@@ -99,7 +99,7 @@ COG_RASTER_BANDS = {
         }
     ],
 }
-RASTER_EXTENSION_V11 = "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
+#RASTER_EXTENSION_V11 = "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
 
 LANDING_PAGE_LINK = Link(
     rel="about",
@@ -123,9 +123,9 @@ KEYWORDS = [
 ]
 
 COLLECTION_PROPS: Dict[str, Any] = {
-    CollectionType.Basic: {
+    CollectionType.CDL: {
         "id": "usda-cdl",
-        "title": "USDA CDL",
+        "title": "USDA Cropland Data Layer (CDL)",
         "description": "The USDA Cropland Data Layer (CDL) is a crop-specific land cover data layer. The Confidence Layer represents the predicted confidence that is associated with an output pixel. A value of zero would therefore have a low confidence (always wrong), while a value of 100 would have a very high confidence (always right).",
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),

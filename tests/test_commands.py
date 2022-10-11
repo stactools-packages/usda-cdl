@@ -1,4 +1,5 @@
-import glob
+#import glob
+import os.path
 from tempfile import TemporaryDirectory
 from typing import Callable, List
 
@@ -14,55 +15,38 @@ class CommandsTest(CliTestCase):
     def create_subcommand_functions(self) -> List[Callable[[Group], Command]]:
         return [create_usda_cdl_command]
 
-    def test_create_usda_cdl_items(self) -> None:
-        nc_href = test_data.get_path("data-files/netcdf/monthly/nclimgrid_prcp.nc")
+    def test_create_cropland_item(self) -> None:
+        infile = test_data.get_path("data-files/basic_cropland_2020.tif")
         with TemporaryDirectory() as tmp_dir:
-            cmd = f"usda-cdl create-items {nc_href} {tmp_dir} {tmp_dir}"
+            cmd = f"usda-cdl create-cropland-item {infile} {tmp_dir}"
             self.run_command(cmd)
+            item_path = os.path.join(
+                tmp_dir, "basic_cropland_2020.json")
+            item = pystac.read_file(item_path)
+        item.validate()  
 
-            cog_files = glob.glob(f"{tmp_dir}/*tif")
-            assert len(cog_files) == 8
-            item_files = glob.glob(f"{tmp_dir}/*.json")
-            assert len(item_files) == 2
-
-            for item_file in item_files:
-                item = pystac.read_file(item_file)
-                item.validate()
-
-    def test_create_usda_cdl_ancillary_items(self) -> None:
-        nc_href = test_data.get_path(
-            "data-files/netcdf/daily/beta/by-month/2022/01/prcp-202201-grd-prelim.nc"
-        )
+    def test_create_cultivated_item(self) -> None:
+        infile = test_data.get_path("data-files/ancillary_cultivated_2021.tif")
         with TemporaryDirectory() as tmp_dir:
-            cmd = f"usda-cdl create-items {nc_href} {tmp_dir} {tmp_dir}"
+            cmd = f"usda-cdl create-cultivated-item {infile} {tmp_dir}"
             self.run_command(cmd)
+            item_path = os.path.join(
+                tmp_dir, "ancillary_cultivated_2021.json")
+            item = pystac.read_file(item_path)
+        item.validate()
 
-            cog_files = glob.glob(f"{tmp_dir}/*tif")
-            assert len(cog_files) == 4
-            item_files = glob.glob(f"{tmp_dir}/*.json")
-            assert len(item_files) == 1
-
-            for item_file in item_files:
-                item = pystac.read_file(item_file)
-                item.validate()
-
-    def test_create_monthly_collection(self) -> None:
+    def test_create_frequency_item(self) -> None:
+        corn_infile = test_data.get_path("data-files/frequency_corn_2021.tif")
+        cotton_infile = test_data.get_path("data-files/frequency_cotton_2021.tif")
+        soybean_infile = test_data.get_path("data-files/frequency_soybean_2021.tif")
+        wheat_infile = test_data.get_path("data-files/frequency_wheat_2021.tif")
         with TemporaryDirectory() as tmp_dir:
-            file_list_path = f"{tmp_dir}/test_monthly.txt"
-            with open(file_list_path, "w") as f:
-                f.write(
-                    test_data.get_path("data-files/netcdf/monthly/nclimgrid_prcp.nc")
-                )
-
-            cmd = f"usda-cdl create-collection {file_list_path} {tmp_dir}"
+            cmd = f"usda-cdl create-frequency-item {corn_infile} {cotton_infile} {soybean_infile} {wheat_infile} {tmp_dir}"
             self.run_command(cmd)
+            item_path = os.path.join(
+                tmp_dir, 
+                "frequency_corn_2021.json")
+            item = pystac.read_file(item_path)
+        item.validate()   
 
-            item_paths = ["monthly/nclimgrid-189501", "monthly/nclimgrid-189502"]
-            for item_path in item_paths:
-                item_files = glob.glob(f"{tmp_dir}/{item_path}/*.json")
-                assert len(item_files) == 1
-                cog_files = glob.glob(f"{tmp_dir}/{item_path}/*.tif")
-                assert len(cog_files) == 4
 
-            collection = pystac.read_file(f"{tmp_dir}/monthly/collection.json")
-            collection.validate()

@@ -4,8 +4,8 @@ from datetime import datetime, timezone
 from typing import Optional
 
 import stactools.core.create
-from pystac import Asset, Collection, Item, MediaType  # Add Collection later
-from pystac.extensions.item_assets import AssetDefinition, ItemAssetsExtension
+from pystac import Asset, Collection, Item, MediaType 
+from pystac.extensions.item_assets import ItemAssetsExtension
 
 from stactools.usda_cdl import constants
 from stactools.usda_cdl.constants import COLLECTION_PROPS, CollectionType, Variable
@@ -37,12 +37,25 @@ class Filename:
         return cls(variable=variable, year=year, href=href)
 
 
+def _add_asset(item: Item, filename: Filename) -> Item:
+    asset_title = f"{constants.COG_ASSET_TITLES[filename.variable]} {filename.year}"
+    asset = Asset(
+        href=filename.href, 
+        title=asset_title, 
+        media_type=MediaType.COG, 
+        roles=["data"]
+    )
+    item.add_asset(filename.variable, asset)
+
+    return item
+
+
 def create_cropland_item(
     cropland_href: str, confidence_href: Optional[str] = None
 ) -> Item:
     """
     Creates a base STAC Item with COG assets for a single temporal unit.
-    A temporal unit is year for the base collection.
+    A temporal unit is year for the cropland collection.
 
     Args:
         cropland_href (str): Cropland href to a COG.
@@ -75,8 +88,8 @@ def create_cropland_item(
 
 
 def create_cultivated_item(cultivated_href: str) -> Item:
-    """Creates a base STAC Item with COG assets for a single temporal unit.
-       A temporal unit is year for the cultivated collection.
+    """
+    Creates a base STAC Item with COG assets.
 
     Args:
         cultivated_href (str): Cultivated href to a COG
@@ -100,8 +113,8 @@ def create_frequency_item(
     soybean_href: str,
     wheat_href: str,
 ) -> Item:
-    """Creates a base STAC Item with COG assets for a single temporal unit.
-       A temporal unit is year for the ancillary collection.
+    """
+    Creates a base STAC Item with COG assets.
 
     Args:
         corn_href (str): Corn href to a COG
@@ -130,24 +143,15 @@ def create_frequency_item(
     return item
 
 
-def _add_asset(item: Item, filename: Filename) -> Item:
-    asset_title = f"{constants.COG_ASSET_TITLES[filename.variable]} {filename.year}"
-    asset = Asset(
-        href=filename.href, title=asset_title, media_type=MediaType.COG, roles=["data"]
-    )
-    item.add_asset(filename.variable, asset)
-
-    return item
-
-
 def create_collection(collection_type: CollectionType) -> Collection:
     """
-    Creates a STAC Collection for CDL.
+    Creates a STAC Collections for .
 
     Args:
-        collection_id (str): Desired ID for the STAC Collection.
+        collection_type: Desired collection type for the STAC Collections.
+    
     Returns:
-        Collection: The created STAC Collection.
+        Collection: The created STAC Collections.
     """
     properties = COLLECTION_PROPS[collection_type]
     collection = Collection(
