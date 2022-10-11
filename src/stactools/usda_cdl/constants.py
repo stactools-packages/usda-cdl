@@ -2,7 +2,15 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict
 
-from pystac import Extent, Link, Provider, ProviderRole, SpatialExtent, TemporalExtent, MediaType
+from pystac import (
+    Extent,
+    Link,
+    MediaType,
+    Provider,
+    ProviderRole,
+    SpatialExtent,
+    TemporalExtent,
+)
 from pystac.extensions.item_assets import AssetDefinition
 
 
@@ -27,7 +35,9 @@ class CollectionType(str, Enum):
     Frequency = "frequency"
 
 
-CLASSIFICATION_SCHEMA = "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+CLASSIFICATION_SCHEMA = (
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+)
 COG_ASSET_TITLES = {
     Variable.Cropland: "Cropland Data Layer (CDL)",
     Variable.Confidence: "Confidence",
@@ -112,77 +122,56 @@ KEYWORDS = [
     "Agriculture",
 ]
 
-""" USDA_CDL_COLLECTION: Dict[str, Any] = {
-    "id": "usda-cdl",
-    "title": "USDA CDL",
-    "description": ("x"),
-    "license": "proprietary",
-    "keywords": KEYWORDS,
-    "extent": Extent(
-        SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-        TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]]),
-    ),
-}
-
-USDA_CDL_CULTUVATED_COLLECTION: Dict[str, Any] = {
-    "id": "cultivated",
-    "title": "USDA CDL Cultivated",
-    "description": ("x"),
-    "license": "proprietary",
-    "keywords": KEYWORDS,
-    "extent": Extent(
-        SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-        TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
-    ),
-}
-
-USDA_CDL_FREQUENCY_COLLECTION: Dict[str, Any] = {
-    "id": "frequnecy",
-    "title": "USDA CDL",
-    "description": ("x"),
-    "license": "proprietary",
-    "keywords": KEYWORDS,
-    "extent": Extent(
-        SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-        TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
-    ),
-} """
-
 COLLECTION_PROPS: Dict[str, Any] = {
     CollectionType.Basic: {
         "id": "usda-cdl",
         "title": "USDA CDL",
-        "description": ("x"),
+        "description": "The USDA Cropland Data Layer (CDL) is a crop-specific land cover data layer. The Confidence Layer represents the predicted confidence that is associated with an output pixel. A value of zero would therefore have a low confidence (always wrong), while a value of 100 would have a very high confidence (always right).",
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-            TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]])),
+            TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]]),
+        ),
         "item_assets": {
-            "cropland": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"])
-        }
+            "cropland": AssetDefinition.create(
+                title=None, description=None, media_type=MediaType.COG, roles=["data"]
+            )
+        },
     },
     CollectionType.Cultivated: {
         "id": "usda-cdl-cultivated",
         "title": "USDA CDL Cultivated",
-        "description": ("x"),
+        "description": "The UDSA CDL Cultivated Layer is based on the most recent five years (2017-2021).",
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]])),
+            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
+        ),
         "item_assets": {
-            "cultivated": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"])
-        }
+            "cultivated": AssetDefinition.create(
+                title=None, description=None, media_type=MediaType.COG, roles=["data"]
+            )
+        },
     },
     CollectionType.Frequency: {
         "id": "usda-cdl-frequency",
         "title": "USDA CDL Frequnecy",
-        "description": ("x"),
+        "description": "The USDA CDL 2021 Crop Frequency Layer identifies crop specific planting frequency and are based on land cover information derived from the 2008 through 2021 CDL's. There are currently four individual crop frequency data layers that represent four major crops: corn, cotton, soybeans, and wheat.",
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]])),
+            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
+        ),
         "item_assets": {
-            "corn": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
-            "cotton": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
-            "soybean": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
-            "wheat": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
-        }
-    }
+            "corn": AssetDefinition.create(
+                title=None, description=None, media_type=MediaType.COG, roles=["data"]
+            ),
+            "cotton": AssetDefinition.create(
+                title=None, description=None, media_type=MediaType.COG, roles=["data"]
+            ),
+            "soybean": AssetDefinition.create(
+                title=None, description=None, media_type=MediaType.COG, roles=["data"]
+            ),
+            "wheat": AssetDefinition.create(
+                title=None, description=None, media_type=MediaType.COG, roles=["data"]
+            ),
+        },
+    },
 }

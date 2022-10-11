@@ -1,21 +1,23 @@
 import datetime
 
-from pystac import MediaType
+import pytest
 from dateutil.tz import tzutc
+from pystac import MediaType
 
 import stactools.usda_cdl.stac
 from stactools.usda_cdl.constants import CollectionType
-
-import pytest
 from tests import test_data
 
 
 def test_create_cropland_item_with_one_href() -> None:
     path = test_data.get_path("data-files/basic_cropland_2020.tif")
     item = stactools.usda_cdl.stac.create_cropland_item(path)
-    assert item.common_metadata.start_datetime == datetime.datetime(2020, 1, 1, tzinfo=tzutc())
+    assert item.common_metadata.start_datetime == datetime.datetime(
+        2020, 1, 1, tzinfo=tzutc()
+    )
     assert item.common_metadata.end_datetime == datetime.datetime(
-        2020, 12, 31, 23, 59, 59, tzinfo=tzutc())
+        2020, 12, 31, 23, 59, 59, tzinfo=tzutc()
+    )
     assert len(item.assets) == 1
     asset = item.assets["cropland"]
     assert asset.title == "Cropland Data Layer (CDL) 2020"
@@ -27,9 +29,12 @@ def test_create_cropland_item_with_one_href() -> None:
 def test_create_cropland_item_with_one_href_2021() -> None:
     path = test_data.get_path("data-files/basic_cropland_2021.tif")
     item = stactools.usda_cdl.stac.create_cropland_item(path)
-    assert item.common_metadata.start_datetime == datetime.datetime(2021, 1, 1, tzinfo=tzutc())
+    assert item.common_metadata.start_datetime == datetime.datetime(
+        2021, 1, 1, tzinfo=tzutc()
+    )
     assert item.common_metadata.end_datetime == datetime.datetime(
-        2021, 12, 31, 23, 59, 59, tzinfo=tzutc())
+        2021, 12, 31, 23, 59, 59, tzinfo=tzutc()
+    )
 
 
 def test_create_cropland_item_with_two_hrefs() -> None:
@@ -80,7 +85,8 @@ def test_create_frequency_item_with_four_href() -> None:
     soybean_path = test_data.get_path("data-files/frequency_soybean_2021.tif")
     wheat_path = test_data.get_path("data-files/frequency_wheat_2021.tif")
     item = stactools.usda_cdl.stac.create_frequency_item(
-        corn_path, cotton_path, soybean_path, wheat_path)
+        corn_path, cotton_path, soybean_path, wheat_path
+    )
     assert len(item.assets) == 4
     item.validate()
 
@@ -92,7 +98,8 @@ def test_create_frequency_item_different_years() -> None:
     wheat_path = test_data.get_path("data-files/frequency_wheat_2021.tif")
     with pytest.raises(ValueError):
         stactools.usda_cdl.stac.create_frequency_item(
-            corn_path, cotton_path, soybean_path, wheat_path)
+            corn_path, cotton_path, soybean_path, wheat_path
+        )
 
 
 def test_create_basic_collection() -> None:

@@ -6,6 +6,7 @@ from pystac import MediaType
 from stactools.usda_cdl import constants
 from stactools.usda_cdl.constants import Frequency, Variable
 
+
 def data_frequency(href: str) -> Frequency:
     """Determine if data collection is 'usda_cdl' or 'usda_cdl_ancillary' from the passed HREF.
 
@@ -17,9 +18,12 @@ def data_frequency(href: str) -> Frequency:
     """
     basename = os.path.splitext(os.path.basename(href))[0]
     frequency = (
-        Frequency.USDA_CDL if basename.startswith("usda_cdl") else Frequency.USDA_CDL_ANCILLARY
+        Frequency.USDA_CDL
+        if basename.startswith("usda_cdl")
+        else Frequency.USDA_CDL_ANCILLARY
     )
     return frequency
+
 
 def cog_asset_dict(frequency: Frequency, var: Variable) -> Dict[str, Any]:
     """Returns a COG asset, less the HREF, in dictionary form.
