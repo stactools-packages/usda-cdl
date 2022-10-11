@@ -49,15 +49,14 @@ def create_usda_cdl_command(cli: Group) -> Command:
             outdir (str): Directory that will contain the collection.
             id (str)
         """
-        with open(infile) as f:
-            hrefs = [os.path.abspath(line.strip()) for line in f.readlines()]
+        with open(infile) as file:
+            hrefs = [line.strip() for line in file.readlines()]
 
         collection = stac.create_collection(id)
         collection.set_self_href(os.path.join(outdir, "collection.json"))
         collection.catalog_type = CatalogType.SELF_CONTAINED
         for href in hrefs:
-            item = stac.create_item(
-                href, include_quality_asset=include_quality_assets)
+            item = stac.create_item(href)
             collection.add_item(item)
         collection.make_all_asset_hrefs_relative()
         collection.validate_all()

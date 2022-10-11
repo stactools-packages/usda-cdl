@@ -1,3 +1,0 @@
-tests/data-files/usda_cdl/cropland/cdl_cropland_2020.tif
-tests/data-files/usda_cdl/cropland/cdl_cropland_2021.tif
-tests/data-files/usda_cdl/cultivated/cdl_cultivated_2021.tif

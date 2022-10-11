@@ -5,6 +5,7 @@ from stactools.usda_cdl.stac import (
     create_cropland_item,
     create_cultivated_item,
     create_frequency_item,
+    create_collection
 )
 
 __all__ = [
