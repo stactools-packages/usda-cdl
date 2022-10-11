@@ -2,7 +2,8 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict
 
-from pystac import Extent, Link, Provider, ProviderRole, SpatialExtent, TemporalExtent
+from pystac import Extent, Link, Provider, ProviderRole, SpatialExtent, TemporalExtent, MediaType
+from pystac.extensions.item_assets import AssetDefinition
 
 
 class Frequency(str, Enum):  # update to collection
@@ -20,6 +21,13 @@ class Variable(str, Enum):
     Wheat = "wheat"
 
 
+class CollectionType(str, Enum):
+    Basic = "basic"
+    Cultivated = "cultivated"
+    Frequency = "frequency"
+
+
+CLASSIFICATION_SCHEMA = "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
 COG_ASSET_TITLES = {
     Variable.Cropland: "Cropland Data Layer (CDL)",
     Variable.Confidence: "Confidence",
@@ -141,34 +149,40 @@ USDA_CDL_FREQUENCY_COLLECTION: Dict[str, Any] = {
 } """
 
 COLLECTION_PROPS: Dict[str, Any] = {
-    "basic":{
+    CollectionType.Basic: {
         "id": "usda-cdl",
         "title": "USDA CDL",
         "description": ("x"),
-        "license": "proprietary",
-        "keywords": KEYWORDS,
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
             TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]])),
+        "item_assets": {
+            "cropland": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"])
+        }
     },
-    "ancillary":{
-        "id": "cultivated",
+    CollectionType.Cultivated: {
+        "id": "usda-cdl-cultivated",
         "title": "USDA CDL Cultivated",
         "description": ("x"),
-        "license": "proprietary",
-        "keywords": KEYWORDS,
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
             TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]])),
+        "item_assets": {
+            "cultivated": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"])
+        }
     },
-    "frequency":{
-        "id": "frequnecy",
-        "title": "USDA CDL",
+    CollectionType.Frequency: {
+        "id": "usda-cdl-frequency",
+        "title": "USDA CDL Frequnecy",
         "description": ("x"),
-        "license": "proprietary",
-        "keywords": KEYWORDS,
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
             TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]])),
+        "item_assets": {
+            "corn": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
+            "cotton": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
+            "soybean": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
+            "wheat": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
+        }
     }
 }

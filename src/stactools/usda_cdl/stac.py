@@ -5,10 +5,11 @@ from typing import Optional
 
 import stactools.core.create
 from pystac import Asset, Item, Collection, MediaType  # Add Collection later
-#from pystac.extensions.item_assets import AssetDefinition, ItemAssetsExtension
+from pystac.extensions.item_assets import AssetDefinition, ItemAssetsExtension
 
 from stactools.usda_cdl import constants
-from stactools.usda_cdl.constants import Variable
+from stactools.usda_cdl.constants import Variable, CollectionType, COLLECTION_PROPS
+
 
 
 @dataclass(frozen=True)
@@ -137,7 +138,7 @@ def _add_asset(item: Item, filename: Filename) -> Item:
 
     return item
 
-def create_collection(collection_id: str) -> Collection:
+def create_collection(collection_type: CollectionType) -> Collection:
     """
     Creates a STAC Collection for CDL. 
 
@@ -146,24 +147,21 @@ def create_collection(collection_id: str) -> Collection:
     Returns:
         Collection: The created STAC Collection.
     """
-    collection = Collection(id=collection_id,
-                title=constants.COLLECTION_TITLE,
-                description=constants.COLLECTION_DESCRIPTION,
-                license=constants.LICENSE,
+    properties = COLLECTION_PROPS[collection_type]
+    collection = Collection(
+                id=properties["id"],
+                title = properties["title"],
+                description=properties["description"],
                 keywords=constants.KEYWORDS,
                 providers=constants.PROVIDERS,
-                extent=constants.EXTENT,
-                summaries=constants.SUMMARIES,
-                extra_fields={
-                    "esa_worldcover:product_version":
-                    constants.PRODUCT_VERSION
-                })
+                extent=properties["extent"],
+    )
     #scientific = ScientificExtension.ext(collection, add_if_missing=True)
     #scientific.doi = constants.DATA_DOI
     #scientific.citation = constants.DATA_CITATION
 
     item_assets = ItemAssetsExtension.ext(collection, add_if_missing=True)
-    item_assets.item_assets = constants.ITEM_ASSETS
+    item_assets.item_assets = properties["item_assets"]
 
     #RasterExtension.add_to(collection)
     collection.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)

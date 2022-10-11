@@ -4,11 +4,10 @@ from pystac import MediaType
 from dateutil.tz import tzutc
 
 import stactools.usda_cdl.stac
+from stactools.usda_cdl.constants import CollectionType
 
 import pytest
 from tests import test_data
-
-# create_basic_item
 
 
 def test_create_cropland_item_with_one_href() -> None:
@@ -93,6 +92,25 @@ def test_create_frequency_item_different_years() -> None:
     wheat_path = test_data.get_path("data-files/frequency_wheat_2021.tif")
     with pytest.raises(ValueError):
         stactools.usda_cdl.stac.create_frequency_item(
-        corn_path, cotton_path, soybean_path, wheat_path)
+            corn_path, cotton_path, soybean_path, wheat_path)
 
-    # TODO what happens if frequency files with different years are put on the same item?
+
+def test_create_basic_collection() -> None:
+    collection = stactools.usda_cdl.stac.create_collection(CollectionType.Basic)
+    assert collection.id == "usda-cdl"
+    collection.set_self_href("")
+    collection.validate()
+
+
+def test_create_cultivated_collection() -> None:
+    collection = stactools.usda_cdl.stac.create_collection(CollectionType.Cultivated)
+    assert collection.id == "usda-cdl-cultivated"
+    collection.set_self_href("")
+    collection.validate()
+
+
+def test_create_frequency_collection() -> None:
+    collection = stactools.usda_cdl.stac.create_collection(CollectionType.Frequency)
+    assert collection.id == "usda-cdl-frequency"
+    collection.set_self_href("")
+    collection.validate()
