@@ -13,7 +13,7 @@
 
 A stactools package for USDA Cropland Data Layer (CDL) product. 
 
-The USDA Cropland Data Layer (CDL) is a crop-specific land cover data layer. The data is provided at 30 m resolution over the Contiguous United States(CONUS) from 2008 to Present. The USDA CDL is produced using satellite imagery from the Landsat 8 OLI/TIRS sensor, the ISRO ResourceSat-2 LISS-3, and the ESA SENTINEL-2 sensors collected during the current growing season.
+The USDA Cropland Data Layer (CDL) is a crop-specific land cover data layer. The data is provided at 30 m resolution over the Contiguous United States (CONUS) from 2008 to Present. The USDA CDL is produced using satellite imagery from the Landsat 8 OLI/TIRS sensor, the ISRO ResourceSat-2 LISS-3, and the ESA SENTINEL-2 sensors collected during the current growing season.
 
 This package can generate STAC files from TIFF files that link to the Cloud-Optimized GeoTiff (COG) files.
 
