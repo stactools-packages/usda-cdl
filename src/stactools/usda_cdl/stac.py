@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 import stactools.core.create
-from pystac import Asset, Item, MediaType  # Add Collection later
+from pystac import Asset, Item, Collection, MediaType  # Add Collection later
 #from pystac.extensions.item_assets import AssetDefinition, ItemAssetsExtension
 
 from stactools.usda_cdl import constants
@@ -15,9 +15,10 @@ from stactools.usda_cdl.constants import Variable
 class Filename:
     variable: Variable
     year: int
+    href: str
 
     @classmethod
-    def parse(cls, href: str, expected_variable: Variable) -> "Filename":
+    def parse(cls, href: str, expected_variable: Variable, expected_year: Optional[int] = None) -> "Filename":
         """
         notes
         """
@@ -30,7 +31,12 @@ class Filename:
             )
 
         year = int(parts[2])
-        return cls(variable=variable, year=year)
+        if expected_year is not None and year != expected_year:
+            raise ValueError(
+                f"expected year '{expected_year}, got '{year}'"
+            )
+
+        return cls(variable=variable, year=year, href=href)
 
 
 def create_cropland_item(cropland_href: str, confidence_href: Optional[str] = None) -> Item:
@@ -55,29 +61,11 @@ def create_cropland_item(cropland_href: str, confidence_href: Optional[str] = No
     item.datetime = None
     item.common_metadata.created = datetime.now(tz=timezone.utc)
 
-    asset_title = f"{constants.COG_ASSET_TITLES[cropland_filename.variable]} {cropland_filename.year}"
-    asset = Asset(
-        href=cropland_href,
-        title=asset_title,
-        media_type=MediaType.COG,
-        roles=["data"]
-    )
-    item.add_asset(cropland_filename.variable, asset)
+    _add_asset(item, cropland_filename)
 
     if confidence_href is not None:
-        confidence_filename = Filename.parse(confidence_href, Variable.Confidence)
-        if confidence_filename.year != cropland_filename.year:
-            raise ValueError(
-                f"cropland year ({cropland_filename.year}) does not match "
-                f"confidence year ({confidence_filename.year})")
-        asset_title = f"{constants.COG_ASSET_TITLES[confidence_filename.variable]} {confidence_filename.year}"
-        asset = Asset(
-            href=confidence_href,
-            title=asset_title,
-            media_type=MediaType.COG,
-            roles=["data"]
-        )
-        item.add_asset(confidence_filename.variable, asset)
+        confidence_filename = Filename.parse(confidence_href, Variable.Confidence, cropland_filename.year)
+        _add_asset(item, confidence_filename)
 
     return item
 
@@ -93,19 +81,12 @@ def create_cultivated_item(
     Returns:
         Item: A STAC Item object.
     """
-    cultivated_filename = Filename.parse(cultivated_href, Variable.Cultivated)
 
     item = stactools.core.create.item(cultivated_href)
     del item.assets["data"]
 
-    asset_title = f"{constants.COG_ASSET_TITLES[cultivated_filename.variable]} {cultivated_filename.year}"
-    asset = Asset(
-        href=cultivated_href,
-        title=asset_title,
-        media_type=MediaType.COG,
-        roles=["data"]
-    )
-    item.add_asset(cultivated_filename.variable, asset)
+    cultivated_filename = Filename.parse(cultivated_href, Variable.Cultivated)
+    _add_asset(item, cultivated_filename)
 
     return item
 
@@ -131,23 +112,64 @@ def create_frequency_item(
     item = stactools.core.create.item(corn_href)
     del item.assets["data"]
 
-    item = _add_asset(item, corn_href, Variable.Corn)
-    item = _add_asset(item, cotton_href, Variable.Cotton)
-    item = _add_asset(item, soybean_href, Variable.Soybean)
-    item = _add_asset(item, wheat_href, Variable.Wheat)
+    corn_filename = Filename.parse(corn_href, Variable.Corn)
+    cotton_filename = Filename.parse(cotton_href, Variable.Cotton, corn_filename.year)
+    soybean_filename = Filename.parse(soybean_href, Variable.Soybean, corn_filename.year)
+    wheat_filename = Filename.parse(wheat_href, Variable.Wheat, corn_filename.year)
+
+    item = _add_asset(item, corn_filename)
+    item = _add_asset(item, cotton_filename)
+    item = _add_asset(item, soybean_filename)
+    item = _add_asset(item, wheat_filename)
 
     return item
 
 
-def _add_asset(item: Item, href: str, variable: Variable) -> Item:
-    # TODO check year
-    asset_title = f"{constants.COG_ASSET_TITLES[variable]}"
+def _add_asset(item: Item, filename: Filename) -> Item:
+    asset_title = f"{constants.COG_ASSET_TITLES[filename.variable]} {filename.year}"
     asset = Asset(
-        href=href,
+        href=filename.href,
         title=asset_title,
         media_type=MediaType.COG,
         roles=["data"]
     )
-    item.add_asset(variable, asset)
+    item.add_asset(filename.variable, asset)
 
     return item
+
+def create_collection(collection_id: str) -> Collection:
+    """
+    Creates a STAC Collection for CDL. 
+
+    Args:
+        collection_id (str): Desired ID for the STAC Collection.
+    Returns:
+        Collection: The created STAC Collection.
+    """
+    collection = Collection(id=collection_id,
+                title=constants.COLLECTION_TITLE,
+                description=constants.COLLECTION_DESCRIPTION,
+                license=constants.LICENSE,
+                keywords=constants.KEYWORDS,
+                providers=constants.PROVIDERS,
+                extent=constants.EXTENT,
+                summaries=constants.SUMMARIES,
+                extra_fields={
+                    "esa_worldcover:product_version":
+                    constants.PRODUCT_VERSION
+                })
+    #scientific = ScientificExtension.ext(collection, add_if_missing=True)
+    #scientific.doi = constants.DATA_DOI
+    #scientific.citation = constants.DATA_CITATION
+
+    item_assets = ItemAssetsExtension.ext(collection, add_if_missing=True)
+    item_assets.item_assets = constants.ITEM_ASSETS
+
+    #RasterExtension.add_to(collection)
+    collection.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
+
+    #collection.add_links([
+        #constants.LICENSE_LINK, constants.USER_LINK, constants.VALIDATION_LINK
+    # ])
+
+    return collection
