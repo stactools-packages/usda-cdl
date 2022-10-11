@@ -104,9 +104,9 @@ KEYWORDS = [
     "Agriculture",
 ]
 
-USDA_CDL_COLLECTION: Dict[str, Any] = {
+""" USDA_CDL_COLLECTION: Dict[str, Any] = {
     "id": "usda-cdl",
-    "title": "x",
+    "title": "USDA CDL",
     "description": ("x"),
     "license": "proprietary",
     "keywords": KEYWORDS,
@@ -116,9 +116,9 @@ USDA_CDL_COLLECTION: Dict[str, Any] = {
     ),
 }
 
-USDA_CDL_ANCILLARY_COLLECTION: Dict[str, Any] = {
-    "id": "usda-cdl-ancillary",
-    "title": "x",
+USDA_CDL_CULTUVATED_COLLECTION: Dict[str, Any] = {
+    "id": "cultivated",
+    "title": "USDA CDL Cultivated",
     "description": ("x"),
     "license": "proprietary",
     "keywords": KEYWORDS,
@@ -126,4 +126,49 @@ USDA_CDL_ANCILLARY_COLLECTION: Dict[str, Any] = {
         SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
         TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
     ),
+}
+
+USDA_CDL_FREQUENCY_COLLECTION: Dict[str, Any] = {
+    "id": "frequnecy",
+    "title": "USDA CDL",
+    "description": ("x"),
+    "license": "proprietary",
+    "keywords": KEYWORDS,
+    "extent": Extent(
+        SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
+        TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
+    ),
+} """
+
+COLLECTION_PROPS: Dict[str, Any] = {
+    "basic":{
+        "id": "usda-cdl",
+        "title": "USDA CDL",
+        "description": ("x"),
+        "license": "proprietary",
+        "keywords": KEYWORDS,
+        "extent": Extent(
+            SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
+            TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]])),
+    },
+    "ancillary":{
+        "id": "cultivated",
+        "title": "USDA CDL Cultivated",
+        "description": ("x"),
+        "license": "proprietary",
+        "keywords": KEYWORDS,
+        "extent": Extent(
+            SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
+            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]])),
+    },
+    "frequency":{
+        "id": "frequnecy",
+        "title": "USDA CDL",
+        "description": ("x"),
+        "license": "proprietary",
+        "keywords": KEYWORDS,
+        "extent": Extent(
+            SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
+            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]])),
+    }
 }
