@@ -92,6 +92,7 @@ def test_create_frequency_item_different_years() -> None:
     wheat_path = test_data.get_path("data-files/frequency_wheat_2021.tif")
     with pytest.raises(ValueError):
         stactools.usda_cdl.stac.create_frequency_item(
+<<<<<<< HEAD
             corn_path, cotton_path, soybean_path, wheat_path)
 
 
@@ -114,3 +115,8 @@ def test_create_frequency_collection() -> None:
     assert collection.id == "usda-cdl-frequency"
     collection.set_self_href("")
     collection.validate()
+=======
+        corn_path, cotton_path, soybean_path, wheat_path)
+
+    # TODO what happens if frequency files with different years are put on the same item?
+>>>>>>> a4346a7314f25e4615f77f7600f007789c6eca00

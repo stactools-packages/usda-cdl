@@ -112,43 +112,8 @@ KEYWORDS = [
     "Agriculture",
 ]
 
-""" USDA_CDL_COLLECTION: Dict[str, Any] = {
-    "id": "usda-cdl",
-    "title": "USDA CDL",
-    "description": ("x"),
-    "license": "proprietary",
-    "keywords": KEYWORDS,
-    "extent": Extent(
-        SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-        TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]]),
-    ),
-}
-
-USDA_CDL_CULTUVATED_COLLECTION: Dict[str, Any] = {
-    "id": "cultivated",
-    "title": "USDA CDL Cultivated",
-    "description": ("x"),
-    "license": "proprietary",
-    "keywords": KEYWORDS,
-    "extent": Extent(
-        SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-        TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
-    ),
-}
-
-USDA_CDL_FREQUENCY_COLLECTION: Dict[str, Any] = {
-    "id": "frequnecy",
-    "title": "USDA CDL",
-    "description": ("x"),
-    "license": "proprietary",
-    "keywords": KEYWORDS,
-    "extent": Extent(
-        SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-        TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
-    ),
-} """
-
 COLLECTION_PROPS: Dict[str, Any] = {
+<<<<<<< HEAD
     CollectionType.Basic: {
         "id": "usda-cdl",
         "title": "USDA CDL",
@@ -184,5 +149,36 @@ COLLECTION_PROPS: Dict[str, Any] = {
             "soybean": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
             "wheat": AssetDefinition.create(title=None, description=None, media_type=MediaType.COG, roles=["data"]),
         }
+=======
+    "basic":{
+        "id": "usda-cdl",
+        "title": "USDA CDL",
+        "description": ("x"),
+        "license": "proprietary",
+        "keywords": KEYWORDS,
+        "extent": Extent(
+            SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
+            TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]])),
+    },
+    "ancillary":{
+        "id": "cultivated",
+        "title": "USDA CDL Cultivated",
+        "description": ("x"),
+        "license": "proprietary",
+        "keywords": KEYWORDS,
+        "extent": Extent(
+            SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
+            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]])),
+    },
+    "frequency":{
+        "id": "frequnecy",
+        "title": "USDA CDL",
+        "description": ("x"),
+        "license": "proprietary",
+        "keywords": KEYWORDS,
+        "extent": Extent(
+            SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
+            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]])),
+>>>>>>> a4346a7314f25e4615f77f7600f007789c6eca00
     }
 }
