@@ -1,0 +1,74 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "id": "ancillary_cultivated_2021",
+  "properties": {
+    "proj:epsg": 5070,
+    "proj:transform": [
+      30.031953583617746,
+      0.0,
+      -980.7863,
+      0.0,
+      -30.073848022599204,
+      731790.444
+    ],
+    "proj:shape": [
+      177,
+      293
+    ],
+    "datetime": "2022-10-12T11:08:03.126742Z"
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -95.919263,
+          29.613144
+        ],
+        [
+          -95.919216,
+          29.661152
+        ],
+        [
+          -96.010139,
+          29.661181
+        ],
+        [
+          -96.010133,
+          29.613174
+        ],
+        [
+          -95.919263,
+          29.613144
+        ]
+      ]
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "/Users/pholleway/Code/Datasets/usda-cdl/examples/ancillary_cultivated_2021.json",
+      "type": "application/json"
+    }
+  ],
+  "assets": {
+    "cultivated": {
+      "href": "tests/data-files/ancillary_cultivated_2021.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Cultivated 2021",
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "bbox": [
+    -96.010139,
+    29.613144,
+    -95.919216,
+    29.661181
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+  ]
+}

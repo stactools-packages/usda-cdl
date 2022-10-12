@@ -9,10 +9,10 @@ from stactools.usda_cdl.stac import (
 )
 
 __all__ = [
+    "create_collection",
     "create_cropland_item",
     "create_cultivated_item",
     "create_frequency_item",
-    "create_collection",
 ]
 
 stactools.core.use_fsspec()

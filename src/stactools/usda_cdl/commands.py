@@ -34,25 +34,24 @@ def create_usda_cdl_command(cli: Group) -> Command:
         Creates a STAC Collection with Items generated from the HREFs listed
         in INFILE. COGs are also generated and stored alongside the Items.
 
-        The INFILE should contain only cdl or only cdl-ancillary HREFs. Only a
-        single HREF to a single variable (prcp, tavg, tmax, or tmin) should be
-        listed in the INFILE.
+        The INFILE should contain only cropland, cultivated, or frequency HREFs. 
+        Only a single HREF to a single variable should be listed in the INFILE.
 
         Args:
             infile (str): Text file containing one HREF to a TIFF file per line.
             outdir (str): Directory that will contain the collection.
-            id (str)
+            id (str): 
         """
         with open(infile) as file:
             hrefs = [line.strip() for line in file.readlines()]
 
         collection = stac.create_collection(id)
         collection.set_self_href(os.path.join(outdir, "collection.json"))
-        collection.catalog_type = CatalogType.SELF_CONTAINED
-        for href in hrefs:
-            item = stac.create_cropland_item(href)  # will need to add others
-            collection.add_item(item)
-        collection.make_all_asset_hrefs_relative()
+        #collection.catalog_type = CatalogType.SELF_CONTAINED
+        #for href in hrefs:
+            #item = stac.create_cropland_item(href) 
+            #collection.add_item(item)
+        #collection.make_all_asset_hrefs_relative()
         collection.validate_all()
         collection.save()
 
@@ -113,10 +112,10 @@ def create_usda_cdl_command(cli: Group) -> Command:
         Creates a STAC Item.
 
         Args:
-                corn_infile (str): HREF of the frequency COG.
-                cotton_infile (str): HREF of the frequency COG.
-                soybean_infile (str): HREF of the frequency COG.
-                wheat_infile (str): HREF of the frequency COG.
+                corn_infile (str): HREF of the corn frequency COG.
+                cotton_infile (str): HREF of the cotton frequency COG.
+                soybean_infile (str): HREF of the soybean frequency COG.
+                wheat_infile (str): HREF of the wheat frequency COG.
                 outdir (str): Directory that will contain the STAC Item.
         """
         item = stac.create_frequency_item(
