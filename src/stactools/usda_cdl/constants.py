@@ -99,7 +99,7 @@ COG_RASTER_BANDS = {
         }
     ],
 }
-#RASTER_EXTENSION_V11 = "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
+# RASTER_EXTENSION_V11 = "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
 
 LANDING_PAGE_LINK = Link(
     rel="about",
@@ -126,7 +126,10 @@ COLLECTION_PROPS: Dict[str, Any] = {
     CollectionType.CDL: {
         "id": "usda-cdl",
         "title": "USDA Cropland Data Layer (CDL)",
-        "description": "The USDA Cropland Data Layer (CDL) is a crop-specific land cover data layer. The Confidence Layer represents the predicted confidence that is associated with an output pixel. A value of zero would therefore have a low confidence (always wrong), while a value of 100 would have a very high confidence (always right).",
+        "description": "The USDA Cropland Data Layer (CDL) is a crop-specific land cover data "
+        "layer. The Confidence Layer represents the predicted confidence that is associated "
+        "with an output pixel. A value of zero would therefore have a low confidence, "
+        "while a value of 100 would have a very high confidence.",
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
             TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]]),
@@ -140,7 +143,7 @@ COLLECTION_PROPS: Dict[str, Any] = {
     CollectionType.Cultivated: {
         "id": "usda-cdl-cultivated",
         "title": "USDA CDL Cultivated",
-        "description": "The UDSA CDL Cultivated Layer is based on the most recent five years (2017-2021).",
+        "description": "The UDSA CDL Cultivated Layer is based on five years (2017-2021).",
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
             TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
@@ -154,7 +157,10 @@ COLLECTION_PROPS: Dict[str, Any] = {
     CollectionType.Frequency: {
         "id": "usda-cdl-frequency",
         "title": "USDA CDL Frequnecy",
-        "description": "The USDA CDL 2021 Crop Frequency Layer identifies crop specific planting frequency and are based on land cover information derived from the 2008 through 2021 CDL's. There are currently four individual crop frequency data layers that represent four major crops: corn, cotton, soybeans, and wheat.",
+        "description": "The USDA CDL 2021 Crop Frequency Layer identifies crop specific "
+        "planting frequency and are based on land cover information derived from the "
+        "2008 through 2021 CDL's. There are currently four individual crop frequency "
+        "data layers that represent four major crops: corn, cotton, soybeans, and wheat.",
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
             TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),

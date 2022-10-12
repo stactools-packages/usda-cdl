@@ -1,6 +1,5 @@
-#import glob
+# import glob
 import os.path
-from re import X
 from tempfile import TemporaryDirectory
 from typing import Callable, List
 
@@ -21,18 +20,16 @@ class CommandsTest(CliTestCase):
         with TemporaryDirectory() as tmp_dir:
             cmd = f"usda-cdl create-cropland-item {infile} {tmp_dir}"
             self.run_command(cmd)
-            item_path = os.path.join(
-                tmp_dir, "basic_cropland_2020.json")
+            item_path = os.path.join(tmp_dir, "basic_cropland_2020.json")
             item = pystac.read_file(item_path)
-        item.validate()  
+        item.validate()
 
     def test_create_cultivated_item_command(self) -> None:
         infile = test_data.get_path("data-files/ancillary_cultivated_2021.tif")
         with TemporaryDirectory() as tmp_dir:
             cmd = f"usda-cdl create-cultivated-item {infile} {tmp_dir}"
             self.run_command(cmd)
-            item_path = os.path.join(
-                tmp_dir, "ancillary_cultivated_2021.json")
+            item_path = os.path.join(tmp_dir, "ancillary_cultivated_2021.json")
             item = pystac.read_file(item_path)
         item.validate()
 
@@ -42,14 +39,8 @@ class CommandsTest(CliTestCase):
         soybean_infile = test_data.get_path("data-files/frequency_soybean_2021.tif")
         wheat_infile = test_data.get_path("data-files/frequency_wheat_2021.tif")
         with TemporaryDirectory() as tmp_dir:
-            cmd = f"usda-cdl create-frequency-item {corn_infile} {cotton_infile} {soybean_infile} {wheat_infile} {tmp_dir}"
+            cmd = f"usda-cdl create-frequency-item {corn_infile} {cotton_infile} {soybean_infile} {wheat_infile} {tmp_dir}"  # noqa
             self.run_command(cmd)
-            item_path = os.path.join(
-                tmp_dir, 
-                "frequency_corn_2021.json")
+            item_path = os.path.join(tmp_dir, "frequency_corn_2021.json")
             item = pystac.read_file(item_path)
         item.validate()
-
-     
-
-

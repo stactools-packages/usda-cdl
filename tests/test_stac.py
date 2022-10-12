@@ -98,7 +98,8 @@ def test_create_frequency_item_different_years() -> None:
     wheat_path = test_data.get_path("data-files/frequency_wheat_2021.tif")
     with pytest.raises(ValueError):
         stactools.usda_cdl.stac.create_frequency_item(
-            corn_path, cotton_path, soybean_path, wheat_path)
+            corn_path, cotton_path, soybean_path, wheat_path
+        )
 
 
 def test_create_cdl_collection() -> None:

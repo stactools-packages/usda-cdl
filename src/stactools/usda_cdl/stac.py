@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 import stactools.core.create
-from pystac import Asset, Collection, Item, MediaType 
+from pystac import Asset, Collection, Item, MediaType
 from pystac.extensions.item_assets import ItemAssetsExtension
 
 from stactools.usda_cdl import constants
@@ -40,10 +40,7 @@ class Filename:
 def _add_asset(item: Item, filename: Filename) -> Item:
     asset_title = f"{constants.COG_ASSET_TITLES[filename.variable]} {filename.year}"
     asset = Asset(
-        href=filename.href, 
-        title=asset_title, 
-        media_type=MediaType.COG, 
-        roles=["data"]
+        href=filename.href, title=asset_title, media_type=MediaType.COG, roles=["data"]
     )
     item.add_asset(filename.variable, asset)
 
@@ -149,7 +146,7 @@ def create_collection(collection_type: CollectionType) -> Collection:
 
     Args:
         collection_type: Desired collection type for the STAC Collections.
-    
+
     Returns:
         Collection: The created STAC Collections.
     """

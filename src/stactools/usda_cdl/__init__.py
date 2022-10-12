@@ -2,10 +2,10 @@ import stactools.core
 from stactools.cli.registry import Registry
 
 from stactools.usda_cdl.stac import (
+    create_collection,
     create_cropland_item,
     create_cultivated_item,
     create_frequency_item,
-    create_collection
 )
 
 __all__ = [
