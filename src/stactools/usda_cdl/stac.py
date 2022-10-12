@@ -26,7 +26,7 @@ class Filename:
         """
         id = os.path.splitext(os.path.basename(href))[0]
         parts = id.split("_")
-        variable = parts[1]
+        variable = Variable.from_str(parts[1])
         if variable != expected_variable:
             raise ValueError(f"expected '{expected_variable}, received '{variable}'")
 

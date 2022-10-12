@@ -3,9 +3,9 @@ import os
 
 import click
 from click import Command, Group
-from pystac import CatalogType
 
 from stactools.usda_cdl import stac
+from stactools.usda_cdl.constants import CollectionType
 
 logger = logging.getLogger(__name__)
 
@@ -34,24 +34,22 @@ def create_usda_cdl_command(cli: Group) -> Command:
         Creates a STAC Collection with Items generated from the HREFs listed
         in INFILE. COGs are also generated and stored alongside the Items.
 
-        The INFILE should contain only cropland, cultivated, or frequency HREFs. 
+        The INFILE should contain only cropland, cultivated, or frequency HREFs.
         Only a single HREF to a single variable should be listed in the INFILE.
 
         Args:
             infile (str): Text file containing one HREF to a TIFF file per line.
             outdir (str): Directory that will contain the collection.
-            id (str): 
+            id (str):
         """
-        with open(infile) as file:
-            hrefs = [line.strip() for line in file.readlines()]
-
-        collection = stac.create_collection(id)
+        collection_type = CollectionType.from_str(id)
+        collection = stac.create_collection(collection_type)
         collection.set_self_href(os.path.join(outdir, "collection.json"))
-        #collection.catalog_type = CatalogType.SELF_CONTAINED
-        #for href in hrefs:
-            #item = stac.create_cropland_item(href) 
-            #collection.add_item(item)
-        #collection.make_all_asset_hrefs_relative()
+        # collection.catalog_type = CatalogType.SELF_CONTAINED
+        # for href in hrefs:
+        # item = stac.create_cropland_item(href)
+        # collection.add_item(item)
+        # collection.make_all_asset_hrefs_relative()
         collection.validate_all()
         collection.save()
 

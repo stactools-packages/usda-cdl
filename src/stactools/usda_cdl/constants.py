@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Any, Dict
+from typing import Any, Dict, Type, TypeVar
 
 from pystac import (
     Extent,
@@ -13,13 +13,19 @@ from pystac import (
 )
 from pystac.extensions.item_assets import AssetDefinition
 
-
-class Frequency(str, Enum):  # update to collection
-    base = "base"
-    ancillary = "ancillary"
+T = TypeVar("T", bound="StrEnum")
 
 
-class Variable(str, Enum):
+class StrEnum(str, Enum):
+    @classmethod
+    def from_str(cls: Type[T], s: str) -> T:
+        for value in cls:
+            if value == s:
+                return value
+        raise ValueError(f"Could not parse value from string: {s}")
+
+
+class Variable(StrEnum):
     Cropland = "cropland"
     Confidence = "confidence"
     Cultivated = "cultivated"
@@ -29,7 +35,7 @@ class Variable(str, Enum):
     Wheat = "wheat"
 
 
-class CollectionType(str, Enum):
+class CollectionType(StrEnum):
     CDL = "cdl"
     Cultivated = "cultivated"
     Frequency = "frequency"
