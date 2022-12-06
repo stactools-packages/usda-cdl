@@ -8,6 +8,7 @@
 - Owner: @pholleway
 - Dataset homepage: https://www.nass.usda.gov/Research_and_Science/Cropland/Release/index.php
 - STAC extensions used:
+  - [classification](https://github.com/stac-extensions/classification)
   - [item-assets](https://github.com/stac-extensions/item-assets)
   - [proj](https://github.com/stac-extensions/projection/)
 
@@ -17,13 +18,14 @@ The USDA Cropland Data Layer (CDL) is a crop-specific land cover data layer. The
 
 This package can generate STAC files from TIFF files that link to the Cloud-Optimized GeoTiff (COG) files.
 
+## Examples
+
+There is an example Catalog at examples/catalog.json. 
+
 ## Installation
 ```shell
 pip install stactools-usda-cdl
 ```
-## Examples
-
-There is an example Catalog at examples/catalog.json. 
 
 ## Command-line Usage
 
@@ -31,10 +33,10 @@ Use `stac usda-cdl --help` to see all subcommands and options.
 
 ### Collection
 
-Create a collection:
+Create a collection, e.g. for the cropland data product:
 
 ```shell
-stac usda-cdl create-collection collection.json
+stac usda-cdl create-cropland-item create-collection collection.json
 ```
 
 Get information about all options for collection creation:
@@ -48,7 +50,7 @@ stac usda-cdl create-collection --help
 Create a cropland item:
 
 ```shell
-stac usda-cdl create-cropland-item /path/to/source/file.tif item.json --collection collection.json
+stac usda-cdl create-cropland-item /path/to/source/file.tif item.json
 ```
 
 Get information about all options for item creation:

@@ -13,12 +13,6 @@ from pystac import (
 )
 from pystac.extensions.item_assets import AssetDefinition
 
-
-class Frequency(str, Enum):  # update to collection
-    base = "base"
-    ancillary = "ancillary"
-
-
 class Variable(str, Enum):
     Cropland = "cropland"
     Confidence = "confidence"
