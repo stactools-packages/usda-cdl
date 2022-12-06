@@ -92,7 +92,7 @@ def test_create_frequency_item_with_four_href() -> None:
 
 
 def test_create_frequency_item_different_years() -> None:
-    corn_path = test_data.get_path("data-files/frequency_corn_2022.tif")
+    corn_path = test_data.get_path("data-files/frequency_corn_2020.tif")
     cotton_path = test_data.get_path("data-files/frequency_cotton_2021.tif")
     soybean_path = test_data.get_path("data-files/frequency_soybean_2021.tif")
     wheat_path = test_data.get_path("data-files/frequency_wheat_2021.tif")
