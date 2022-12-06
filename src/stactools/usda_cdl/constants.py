@@ -144,6 +144,15 @@ COLLECTION_PROPS: Dict[str, Any] = {
                 title=None, description=None, media_type=MediaType.COG, roles=["data"]
             )
         },
+        "classes": [{
+            "value": 1,
+            "description": "Tree cover",
+            "color-hint": "006400"
+        }, {
+            "value": 2,
+            "description": "Shrubland",
+            "color-hint": "FFBB22"
+        }]
     },
     CollectionType.Cultivated: {
         "id": "usda-cdl-cultivated",
