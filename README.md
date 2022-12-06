@@ -5,7 +5,7 @@
 - Name: usda-cdl
 - Package: `stactools.usda_cdl`
 - PyPI: https://pypi.org/project/stactools-usda-cdl/
-- Owner: @pholleway
+- Owner: @gadomski, @pholleway
 - Dataset homepage: https://www.nass.usda.gov/Research_and_Science/Cropland/Release/index.php
 - STAC extensions used:
   - [classification](https://github.com/stac-extensions/classification)
