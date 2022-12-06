@@ -25,7 +25,9 @@ for collection_type in CollectionType:
             str(data_files / "frequency_wheat_2021.tif"),
         )
     elif collection_type == CollectionType.Cultivated:
-        item = stac.create_cultivated_item(str(data_files / "ancillary_cultivated_2021.tif"))
+        item = stac.create_cultivated_item(
+            str(data_files / "ancillary_cultivated_2021.tif")
+        )
     collection.add_item(item)
 
 catalog.normalize_hrefs(str(examples))
