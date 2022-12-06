@@ -1,0 +1,78 @@
+{
+  "type": "Collection",
+  "id": "usda-cdl",
+  "stac_version": "1.0.0",
+  "description": "The USDA Cropland Data Layer (CDL) is a crop-specific land cover data layer. The Confidence Layer represents the predicted confidence that is associated with an output pixel. A value of zero would therefore have a low confidence, while a value of 100 would have a very high confidence.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "about",
+      "href": "https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php",
+      "title": "Product Landing Page"
+    },
+    {
+      "rel": "item",
+      "href": "./basic_cropland_2019/basic_cropland_2019.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+  ],
+  "item_assets": {
+    "cropland": {
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "title": "USDA Cropland Data Layer (CDL)",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -127.887,
+          -74.158,
+          47.958,
+          23.1496
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "2008-01-01T00:00:00Z",
+          null
+        ]
+      ]
+    }
+  },
+  "license": "proprietary",
+  "keywords": [
+    "Land Cover",
+    "Land Use",
+    "USDA",
+    "Agriculture"
+  ],
+  "providers": [
+    {
+      "name": "United States Department of Agriculture - National Agricultural Statistics Service",
+      "roles": [
+        "producer",
+        "licensor"
+      ],
+      "url": "https://www.nass.usda.gov/"
+    }
+  ]
+}

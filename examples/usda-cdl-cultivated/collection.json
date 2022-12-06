@@ -1,0 +1,78 @@
+{
+  "type": "Collection",
+  "id": "usda-cdl-cultivated",
+  "stac_version": "1.0.0",
+  "description": "The UDSA CDL Cultivated Layer is based on five years (2017-2021).",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "about",
+      "href": "https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php",
+      "title": "Product Landing Page"
+    },
+    {
+      "rel": "item",
+      "href": "./ancillary_cultivated_2021/ancillary_cultivated_2021.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
+  ],
+  "item_assets": {
+    "cultivated": {
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "title": "USDA CDL Cultivated",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -127.887,
+          -74.158,
+          47.958,
+          23.1496
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "2021-01-01T00:00:00Z",
+          null
+        ]
+      ]
+    }
+  },
+  "license": "proprietary",
+  "keywords": [
+    "Land Cover",
+    "Land Use",
+    "USDA",
+    "Agriculture"
+  ],
+  "providers": [
+    {
+      "name": "United States Department of Agriculture - National Agricultural Statistics Service",
+      "roles": [
+        "producer",
+        "licensor"
+      ],
+      "url": "https://www.nass.usda.gov/"
+    }
+  ]
+}

@@ -5,56 +5,68 @@
   "properties": {
     "proj:epsg": 5070,
     "proj:transform": [
-      30.031953583617746,
+      30.0088881481482,
       0.0,
-      -980.7863,
+      469977.8373,
       0.0,
-      -30.073848022599204,
-      731790.444
+      -30.01240307692295,
+      1274894.836
     ],
     "proj:shape": [
-      177,
-      293
+      130,
+      135
     ],
-    "datetime": "2022-10-12T11:05:40.564580Z"
+    "datetime": "2022-12-06T13:39:18.553631Z"
   },
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          -95.919263,
-          29.613144
+          -90.80205,
+          34.385111
         ],
         [
-          -95.919216,
-          29.661152
+          -90.799711,
+          34.419953
         ],
         [
-          -96.010139,
-          29.661181
+          -90.844067,
+          34.421926
         ],
         [
-          -96.010133,
-          29.613174
+          -90.846386,
+          34.387083
         ],
         [
-          -95.919263,
-          29.613144
+          -90.80205,
+          34.385111
         ]
       ]
     ]
   },
   "links": [
     {
-      "rel": "self",
-      "href": "/Users/pholleway/Code/Datasets/usda-cdl/examples/frequency_corn_2021.json",
+      "rel": "root",
+      "href": "../../catalog.json",
       "type": "application/json"
+    },
+    {
+      "rel": "collection",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA CDL Frequnecy"
+    },
+    {
+      "rel": "parent",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA CDL Frequnecy"
     }
   ],
   "assets": {
     "corn": {
-      "href": "tests/data-files/frequency_corn_2021.tif",
+      "href": "../../../tests/data-files/frequency_corn_2021.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Corn 2021",
       "roles": [
@@ -62,7 +74,7 @@
       ]
     },
     "cotton": {
-      "href": "tests/data-files/frequency_cotton_2021.tif",
+      "href": "../../../tests/data-files/frequency_cotton_2021.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Cotton 2021",
       "roles": [
@@ -70,7 +82,7 @@
       ]
     },
     "soybean": {
-      "href": "tests/data-files/frequency_soybean_2021.tif",
+      "href": "../../../tests/data-files/frequency_soybean_2021.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Soybean 2021",
       "roles": [
@@ -78,7 +90,7 @@
       ]
     },
     "wheat": {
-      "href": "tests/data-files/frequency_wheat_2021.tif",
+      "href": "../../../tests/data-files/frequency_wheat_2021.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Wheat 2021",
       "roles": [
@@ -87,12 +99,13 @@
     }
   },
   "bbox": [
-    -96.010139,
-    29.613144,
-    -95.919216,
-    29.661181
+    -90.846386,
+    34.385111,
+    -90.799711,
+    34.421926
   ],
   "stac_extensions": [
     "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
-  ]
+  ],
+  "collection": "usda-cdl-frequency"
 }
