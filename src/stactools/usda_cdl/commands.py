@@ -24,12 +24,9 @@ def create_usda_cdl_command(cli: Group) -> Command:
         "create-collection",
         short_help="Creates a STAC collection",
     )
-    @click.argument("INFILE")
-    @click.argument("OUTDIR")
-    @click.option(
-        "-i", "--id", default="usda-cdl", show_default=True, help="collection id string"
-    )
-    def create_collection_command(infile: str, outdir: str, id: str) -> None:
+    @click.argument("COLLECTION_TYPE")
+    @click.argument("OUTFILE")
+    def create_collection_command(collection_type: str, outfile: str) -> None:
         """
         Creates a STAC Collection with Items generated from the HREFs listed
         in INFILE. COGs are also generated and stored alongside the Items.
@@ -39,17 +36,11 @@ def create_usda_cdl_command(cli: Group) -> Command:
 
         Args:
             infile (str): Text file containing one HREF to a TIFF file per line.
-            outdir (str): Directory that will contain the collection.
-            id (str):
+            outfile (str): The filename of the output collection.
         """
-        collection_type = CollectionType.from_str(id)
+        collection_type = CollectionType.from_str(collection_type)
         collection = stac.create_collection(collection_type)
-        collection.set_self_href(os.path.join(outdir, "collection.json"))
-        # collection.catalog_type = CatalogType.SELF_CONTAINED
-        # for href in hrefs:
-        # item = stac.create_cropland_item(href)
-        # collection.add_item(item)
-        # collection.make_all_asset_hrefs_relative()
+        collection.set_self_href(outfile)
         collection.validate_all()
         collection.save()
 

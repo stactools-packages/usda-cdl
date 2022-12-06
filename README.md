@@ -36,7 +36,7 @@ Use `stac usda-cdl --help` to see all subcommands and options.
 Create a collection, e.g. for the cropland data product:
 
 ```shell
-stac usda-cdl create-cropland-item create-collection collection.json
+stac usda-cdl create-collection cdl collection.json
 ```
 
 Get information about all options for collection creation:
