@@ -58,49 +58,48 @@ COG_RASTER_BANDS = {
     Variable.Cropland: [
         {
             "data_type": "uint8",
-            "nodata": "nan",
+            "nodata": "0",
             "spatial_resolution": 30,
         }
     ],
     Variable.Confidence: [
         {
             "data_type": "uint8",
-            "nodata": "nan",
             "spatial_resolution": 30,
         }
     ],
     Variable.Cultivated: [
         {
             "data_type": "uint8",
-            "nodata": "nan",
+            "nodata": "0",
             "spatial_resolution": 30,
         }
     ],
     Variable.Corn: [
         {
             "data_type": "uint8",
-            "nodata": "nan",
+            "nodata": "255",
             "spatial_resolution": 30,
         }
     ],
     Variable.Cotton: [
         {
             "data_type": "uint8",
-            "nodata": "nan",
+            "nodata": "255",
             "spatial_resolution": 30,
         }
     ],
     Variable.Soybean: [
         {
             "data_type": "uint8",
-            "nodata": "nan",
+            "nodata": "255",
             "spatial_resolution": 30,
         }
     ],
     Variable.Wheat: [
         {
             "data_type": "uint8",
-            "nodata": "nan",
+            "nodata": "255",
             "spatial_resolution": 30,
         }
     ],
