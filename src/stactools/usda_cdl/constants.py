@@ -65,6 +65,7 @@ COG_RASTER_BANDS = {
     Variable.Confidence: [
         {
             "data_type": "uint8",
+            "nodata": "0",
             "spatial_resolution": 30,
         }
     ],
