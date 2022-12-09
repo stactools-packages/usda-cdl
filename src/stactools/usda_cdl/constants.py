@@ -131,11 +131,20 @@ KEYWORDS = [
 COLLECTION_PROPS: Dict[str, Any] = {
     CollectionType.CDL: {
         "id": "usda-cdl",
-        "title": "USDA Cropland Data Layer (CDL)",
-        "description": "The USDA Cropland Data Layer (CDL) is a crop-specific land cover data "
-        "layer. The Confidence Layer represents the predicted confidence that is associated "
-        "with an output pixel. A value of zero would therefore have a low confidence, "
-        "while a value of 100 would have a very high confidence.",
+        "title": "USDA Cropland Data Layers (CDLs)",
+        "description": "The USDA NASS Cropland Data Layers (CDLs) include Cropland,"
+        "Confidence, Cultivated, and Frequency products. The Cropland product is a"
+        "crop-specific land cover data layer created annually for the contiguous"
+        "United States (CONUS). A corresponding Confidence product represents the"
+        "predicted confidence that is associated with an output pixel. A value"
+        "of zero indicates low confidence, while a value of 100 indicates high"
+        "confidence. The Cultivated product identifies cultivated and non-cultivated"
+        "land cover for CONUS and is based on land cover information derived from"
+        "the 2017 through 2021 Cropland products. The Frequency product"
+        "identifies crop specific planting frequency and are based on land cover"
+        "information derived from the 2008 through 2021 CDL's. There are currently"
+        "four individual crop frequency data layers that represent four major"
+        "crops: corn, cotton, soybeans, and wheat. All products have a resolution of 30 meters.",
         "extent": Extent(
             SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
             TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]]),
@@ -350,7 +359,7 @@ COLLECTION_PROPS: Dict[str, Any] = {
     CollectionType.Frequency: {
         "id": "usda-cdl-frequency",
         "title": "USDA CDL Frequnecy",
-        "description": "The USDA CDL 2021 Crop Frequency Layer identifies crop specific "
+        "description": "The Crop Frequency product identifies crop specific "
         "planting frequency and are based on land cover information derived from the "
         "2008 through 2021 CDL's. There are currently four individual crop frequency "
         "data layers that represent four major crops: corn, cotton, soybeans, and wheat.",
