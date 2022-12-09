@@ -1,0 +1,32 @@
+{
+  "type": "Catalog",
+  "id": "usda-cdl",
+  "stac_version": "1.0.0",
+  "description": "An example catalog for USDA CDL data",
+  "links": [
+    {
+      "rel": "root",
+      "href": "./catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "child",
+      "href": "./usda-cdl/collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layer (CDL)"
+    },
+    {
+      "rel": "child",
+      "href": "./usda-cdl-cultivated/collection.json",
+      "type": "application/json",
+      "title": "USDA CDL Cultivated"
+    },
+    {
+      "rel": "child",
+      "href": "./usda-cdl-frequency/collection.json",
+      "type": "application/json",
+      "title": "USDA CDL Frequnecy"
+    }
+  ],
+  "stac_extensions": []
+}

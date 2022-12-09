@@ -5,18 +5,22 @@
 - Name: usda-cdl
 - Package: `stactools.usda_cdl`
 - PyPI: https://pypi.org/project/stactools-usda-cdl/
-- Owner: @pholleway
-- Dataset homepage: http://example.com
+- Owner: @gadomski, @pholleway
+- Dataset homepage: https://www.nass.usda.gov/Research_and_Science/Cropland/Release/index.php
 - STAC extensions used:
+  - [classification](https://github.com/stac-extensions/classification)
+  - [item-assets](https://github.com/stac-extensions/item-assets)
   - [proj](https://github.com/stac-extensions/projection/)
 
-The stactools-usda-cdl package generates STAC Items and Collections for the USDA Cropland Data Layer (CDL). 
+A stactools package for USDA Cropland Data Layer (CDL) product. 
 
-The USDA CDLs provides data for 2008 through 2021 in geodatabase form. This package assumes a raster has been extracted and tiled into smaller cloud optimized GeoTIFF (COG) image files. The tile filenames are expected to contain the prefix `USDA_CDL_{year}`.
-## STAC Examples
+The USDA Cropland Data Layer (CDL) is a crop-specific land cover data layer. The data is provided at 30 m resolution over the Contiguous United States (CONUS) from 2008 to Present. The USDA CDL is produced using satellite imagery from the Landsat 8 OLI/TIRS sensor, the ISRO ResourceSat-2 LISS-3, and the ESA SENTINEL-2 sensors collected during the current growing season.
 
-- [Collection](examples/collection.json)
-- [Item](examples/item/item.json)
+This package can generate STAC files from TIFF files that link to the Cloud-Optimized GeoTiff (COG) files.
+
+## Examples
+
+There is an example Catalog at examples/catalog.json. 
 
 ## Installation
 ```shell
@@ -25,13 +29,37 @@ pip install stactools-usda-cdl
 
 ## Command-line Usage
 
-Description of the command line functions
+Use `stac usda-cdl --help` to see all subcommands and options.
+
+### Collection
+
+To create a STAC Collection, define the collection type ("cdl", "cultivated","frequency"). 
+
+Create a collection, e.g. for the cropland product:
 
 ```shell
-$ stac usda-cdl create-item source destination
+stac usda-cdl create-collection cdl collection.json
 ```
 
-Use `stac usda-cdl --help` to see all subcommands and options.
+Get information about all options for collection creation:
+
+```shell
+stac usda-cdl create-collection --help
+```
+
+### Item
+
+Create a cropland item:
+
+```shell
+stac usda-cdl create-cropland-item /path/to/source/file.tif item.json
+```
+
+Get information about all options for item creation:
+
+```shell
+stac usda-cdl create-cropland-item --help
+```
 
 ## Contributing
 
@@ -39,19 +67,18 @@ We use [pre-commit](https://pre-commit.com/) to check any changes.
 To set up your development environment:
 
 ```shell
-$ pip install -e .
-$ pip install -r requirements-dev.txt
-$ pre-commit install
+pip install -e .
+pip install -r requirements-dev.txt
+pre-commit install
 ```
 
 To check all files:
 
 ```shell
-$ pre-commit run --all-files
+pre-commit run --all-files
 ```
 
 To run the tests:
 
 ```shell
-$ pytest -vv
-```
+pytest -vv
