@@ -105,6 +105,10 @@ def create_cultivated_item(cultivated_href: str) -> Item:
     cultivated_filename = Filename.parse(cultivated_href, Variable.Cultivated)
     _add_asset(item, cultivated_filename)
 
+    item.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
+    asset = item.assets[Variable.Cultivated]
+    asset.extra_fields["classification:classes"] = constants.COLLECTION_PROPS[CollectionType.Cultivated]["classes"]
+
     return item
 
 
