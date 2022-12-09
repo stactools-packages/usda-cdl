@@ -23,6 +23,12 @@ def test_create_cropland_item_with_one_href() -> None:
     assert asset.title == "Cropland Data Layer (CDL) 2020"
     assert asset.media_type == MediaType.COG
     assert asset.roles == ["data"]
+
+    assert "https://stac-extensions.github.io/classification/v1.1.0/schema.json" in item.stac_extensions
+    assert "classification:classes" in asset.extra_fields
+    classes = asset.extra_fields["classification:classes"]
+    assert classes
+
     item.validate()
 
 

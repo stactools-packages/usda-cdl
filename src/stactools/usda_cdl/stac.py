@@ -81,6 +81,10 @@ def create_cropland_item(
         )
         _add_asset(item, confidence_filename)
 
+    item.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
+    asset = item.assets[Variable.Cropland]
+    asset.extra_fields["classification:classes"] = constants.COLLECTION_PROPS[CollectionType.CDL]["classes"]
+
     return item
 
 
