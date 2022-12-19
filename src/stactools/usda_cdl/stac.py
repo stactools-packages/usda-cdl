@@ -8,25 +8,33 @@ from pystac import Asset, Collection, Item, MediaType
 from pystac.extensions.item_assets import ItemAssetsExtension
 
 from stactools.usda_cdl import constants
-from stactools.usda_cdl.constants import COLLECTION_PROPS, CollectionType, Variable
+from stactools.usda_cdl.constants import (
+    ASSET_PROPS,
+    COLLECTION_PROPS,
+    AssetType,
+    CollectionType,
+)
 
 
 @dataclass(frozen=True)
 class Filename:
-    variable: Variable
+    variable: AssetType
     year: int
     href: str
 
     @classmethod
     def parse(
-        cls, href: str, expected_variable: Variable, expected_year: Optional[int] = None
+        cls,
+        href: str,
+        expected_variable: AssetType,
+        expected_year: Optional[int] = None,
     ) -> "Filename":
         """
         notes
         """
         id = os.path.splitext(os.path.basename(href))[0]
         parts = id.split("_")
-        variable = Variable.from_str(parts[1])
+        variable = AssetType.from_str(parts[1])
         if variable != expected_variable:
             raise ValueError(f"expected '{expected_variable}, received '{variable}'")
 
@@ -38,7 +46,7 @@ class Filename:
 
 
 def _add_asset(item: Item, filename: Filename) -> Item:
-    asset_title = f"{constants.COG_ASSET_TITLES[filename.variable]} {filename.year}"
+    asset_title = f"{constants.COG_TITLES[filename.variable]} {filename.year}"
     asset = Asset(
         href=filename.href, title=asset_title, media_type=MediaType.COG, roles=["data"]
     )
@@ -61,7 +69,7 @@ def create_cropland_item(
     Returns:
         Item: A STAC Item object.
     """
-    cropland_filename = Filename.parse(cropland_href, Variable.Cropland)
+    cropland_filename = Filename.parse(cropland_href, AssetType.Cropland)
 
     item = stactools.core.create.item(cropland_href)
     del item.assets["data"]
@@ -77,14 +85,14 @@ def create_cropland_item(
 
     if confidence_href is not None:
         confidence_filename = Filename.parse(
-            confidence_href, Variable.Confidence, cropland_filename.year
+            confidence_href, AssetType.Confidence, cropland_filename.year
         )
         _add_asset(item, confidence_filename)
 
     item.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
-    asset = item.assets[Variable.Cropland]
-    asset.extra_fields["classification:classes"] = constants.COLLECTION_PROPS[
-        CollectionType.CDL
+    asset = item.assets[AssetType.Cropland]
+    asset.extra_fields["classification:classes"] = constants.ASSET_PROPS[
+        AssetType.Cropland
     ]["classes"]
 
     return item
@@ -104,13 +112,13 @@ def create_cultivated_item(cultivated_href: str) -> Item:
     item = stactools.core.create.item(cultivated_href)
     del item.assets["data"]
 
-    cultivated_filename = Filename.parse(cultivated_href, Variable.Cultivated)
+    cultivated_filename = Filename.parse(cultivated_href, AssetType.Cultivated)
     _add_asset(item, cultivated_filename)
 
     item.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
-    asset = item.assets[Variable.Cultivated]
-    asset.extra_fields["classification:classes"] = constants.COLLECTION_PROPS[
-        CollectionType.Cultivated
+    asset = item.assets[AssetType.Cultivated]
+    asset.extra_fields["classification:classes"] = constants.ASSET_PROPS[
+        AssetType.Cultivated
     ]["classes"]
 
     return item
@@ -137,12 +145,12 @@ def create_frequency_item(
     item = stactools.core.create.item(corn_href)
     del item.assets["data"]
 
-    corn_filename = Filename.parse(corn_href, Variable.Corn)
-    cotton_filename = Filename.parse(cotton_href, Variable.Cotton, corn_filename.year)
+    corn_filename = Filename.parse(corn_href, AssetType.Corn)
+    cotton_filename = Filename.parse(cotton_href, AssetType.Cotton, corn_filename.year)
     soybean_filename = Filename.parse(
-        soybean_href, Variable.Soybean, corn_filename.year
+        soybean_href, AssetType.Soybean, corn_filename.year
     )
-    wheat_filename = Filename.parse(wheat_href, Variable.Wheat, corn_filename.year)
+    wheat_filename = Filename.parse(wheat_href, AssetType.Wheat, corn_filename.year)
 
     item = _add_asset(item, corn_filename)
     item = _add_asset(item, cotton_filename)
@@ -152,7 +160,7 @@ def create_frequency_item(
     return item
 
 
-def create_collection(collection_type: CollectionType) -> Collection:
+def create_collection(collection_type: AssetType) -> Collection:
     """
     Creates a STAC Collections for .
 
