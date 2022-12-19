@@ -5,7 +5,7 @@ import click
 from click import Command, Group
 
 from stactools.usda_cdl import stac
-from stactools.usda_cdl.constants import CollectionType
+from stactools.usda_cdl.constants import AssetType
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ def create_usda_cdl_command(cli: Group) -> Command:
             infile (str): Text file containing one HREF to a TIFF file per line.
             outfile (str): The filename of the output collection.
         """
-        collection_type = CollectionType.from_str(collection_type)
+        collection_type = AssetType.from_str(collection_type)
         collection = stac.create_collection(collection_type)
         collection.set_self_href(outfile)
         collection.validate_all()

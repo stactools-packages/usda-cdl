@@ -25,7 +25,7 @@ class StrEnum(str, Enum):
         raise ValueError(f"Could not parse value from string: {s}")
 
 
-class Variable(StrEnum):
+class AssetType(StrEnum):
     Cropland = "cropland"
     Confidence = "confidence"
     Cultivated = "cultivated"
@@ -37,67 +37,65 @@ class Variable(StrEnum):
 
 class CollectionType(StrEnum):
     CDL = "cdl"
-    Cultivated = "cultivated"
-    Frequency = "frequency"
 
 
 CLASSIFICATION_SCHEMA = (
     "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
 )
-COG_ASSET_TITLES = {
-    Variable.Cropland: "Cropland Data Layer (CDL)",
-    Variable.Confidence: "Confidence",
-    Variable.Cultivated: "Cultivated",
-    Variable.Corn: "Corn",
-    Variable.Cotton: "Cotton",
-    Variable.Soybean: "Soybean",
-    Variable.Wheat: "Wheat",
+COG_TITLES = {
+    AssetType.Cropland: "Cropland Data Layer (CDL)",
+    AssetType.Confidence: "Confidence",
+    AssetType.Cultivated: "Cultivated",
+    AssetType.Corn: "Corn",
+    AssetType.Cotton: "Cotton",
+    AssetType.Soybean: "Soybean",
+    AssetType.Wheat: "Wheat",
 }
 COG_ROLES = ["data"]
 COG_RASTER_BANDS = {
-    Variable.Cropland: [
+    AssetType.Cropland: [
         {
             "data_type": "uint8",
             "nodata": "0",
             "spatial_resolution": 30,
         }
     ],
-    Variable.Confidence: [
+    AssetType.Confidence: [
         {
             "data_type": "uint8",
             "nodata": "0",
             "spatial_resolution": 30,
         }
     ],
-    Variable.Cultivated: [
+    AssetType.Cultivated: [
         {
             "data_type": "uint8",
             "nodata": "0",
             "spatial_resolution": 30,
         }
     ],
-    Variable.Corn: [
+    AssetType.Corn: [
         {
             "data_type": "uint8",
             "nodata": "255",
             "spatial_resolution": 30,
         }
     ],
-    Variable.Cotton: [
+    AssetType.Cotton: [
         {
             "data_type": "uint8",
             "nodata": "255",
             "spatial_resolution": 30,
         }
     ],
-    Variable.Soybean: [
+    AssetType.Soybean: [
         {
             "data_type": "uint8",
             "nodata": "255",
             "spatial_resolution": 30,
         }
     ],
-    Variable.Wheat: [
+    AssetType.Wheat: [
         {
             "data_type": "uint8",
             "nodata": "255",
@@ -105,7 +103,6 @@ COG_RASTER_BANDS = {
         }
     ],
 }
-# RASTER_EXTENSION_V11 = "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
 
 LANDING_PAGE_LINK = Link(
     rel="about",
@@ -121,39 +118,10 @@ PROVIDERS = [
     )
 ]
 
-KEYWORDS = [
-    "Land Cover",
-    "Land Use",
-    "USDA",
-    "Agriculture",
-]
+KEYWORDS = ["Land Cover", "Land Use", "USDA", "Agriculture"]
 
-COLLECTION_PROPS: Dict[str, Any] = {
-    CollectionType.CDL: {
-        "id": "usda-cdl",
-        "title": "USDA Cropland Data Layers (CDLs)",
-        "description": "The USDA NASS Cropland Data Layers (CDLs) include Cropland,"
-        "Confidence, Cultivated, and Frequency products. The Cropland product is a"
-        "crop-specific land cover data layer created annually for the contiguous"
-        "United States (CONUS). A corresponding Confidence product represents the"
-        "predicted confidence that is associated with an output pixel. A value"
-        "of zero indicates low confidence, while a value of 100 indicates high"
-        "confidence. The Cultivated product identifies cultivated and non-cultivated"
-        "land cover for CONUS and is based on land cover information derived from"
-        "the 2017 through 2021 Cropland products. The Frequency product"
-        "identifies crop specific planting frequency and are based on land cover"
-        "information derived from the 2008 through 2021 CDL's. There are currently"
-        "four individual crop frequency data layers that represent four major"
-        "crops: corn, cotton, soybeans, and wheat. All products have a resolution of 30 meters.",
-        "extent": Extent(
-            SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-            TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]]),
-        ),
-        "item_assets": {
-            "cropland": AssetDefinition.create(
-                title=None, description=None, media_type=MediaType.COG, roles=["data"]
-            )
-        },
+ASSET_PROPS: Dict[str, Any] = {
+    AssetType.Cropland: {
         "classes": [
             {"value": 1, "description": "Corn", "color_hint": "FFD200"},
             {"value": 2, "description": "Cotton", "color_hint": "FF2525"},
@@ -338,48 +306,57 @@ COLLECTION_PROPS: Dict[str, Any] = {
             {"value": 254, "description": "Barley/Soybeans", "color_hint": "256F00"},
         ],
     },
-    CollectionType.Cultivated: {
-        "id": "usda-cdl-cultivated",
-        "title": "USDA CDL Cultivated",
-        "description": "The UDSA CDL Cultivated Layer is based on five years (2017-2021).",
-        "extent": Extent(
-            SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
-        ),
-        "item_assets": {
-            "cultivated": AssetDefinition.create(
-                title=None, description=None, media_type=MediaType.COG, roles=["data"]
-            )
-        },
+    AssetType.Cultivated: {
         "classes": [
             {"value": 1, "description": "Non-Cultivated", "color-hint": "000000"},
             {"value": 2, "description": "Cultivated", "color-hint": "006300"},
         ],
     },
-    CollectionType.Frequency: {
-        "id": "usda-cdl-frequency",
-        "title": "USDA CDL Frequnecy",
-        "description": "The Crop Frequency product identifies crop specific "
-        "planting frequency and are based on land cover information derived from the "
-        "2008 through 2021 CDL's. There are currently four individual crop frequency "
-        "data layers that represent four major crops: corn, cotton, soybeans, and wheat.",
-        "extent": Extent(
-            SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-            TemporalExtent([[datetime(2021, 1, 1, tzinfo=timezone.utc), None]]),
+}
+
+COLLECTION_PROPS: Dict[str, Any] = {
+    "id": "usda-cdl",
+    "title": "USDA Cropland Data Layers (CDLs)",
+    "description": (
+        "The USDA NASS Cropland Data Layers (CDLs) include Cropland, "
+        "Confidence, Cultivated, and Frequency products. The Cropland product is a "
+        "crop-specific land cover data layer created annually for the contiguous "
+        "United States (CONUS). A corresponding Confidence product represents the "
+        "predicted confidence that is associated with an output pixel. A value "
+        "of zero indicates low confidence, while a value of 100 indicates high "
+        "confidence. The Cultivated product identifies cultivated and non-cultivated "
+        "land cover for CONUS and is based on land cover information derived from "
+        "the 2017 through 2021 Cropland products. The Frequency product "
+        "identifies crop specific planting frequency and are based on land cover "
+        "information derived from the 2008 through 2021 Cropland products. There "
+        "are currently four individual crop frequency data layers that represent "
+        "four major crops: corn, cotton, soybeans, and wheat. All products have "
+        "a 30 meter resolution."
+    ),
+    "license": "proptietary",
+    "keywords": KEYWORDS,
+    "extent": Extent(
+        SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
+        TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]]),
+    ),
+    "item_assets": {
+        "cropland": AssetDefinition.create(
+            title=None, description=None, media_type=MediaType.COG, roles=["data"]
         ),
-        "item_assets": {
-            "corn": AssetDefinition.create(
-                title=None, description=None, media_type=MediaType.COG, roles=["data"]
-            ),
-            "cotton": AssetDefinition.create(
-                title=None, description=None, media_type=MediaType.COG, roles=["data"]
-            ),
-            "soybean": AssetDefinition.create(
-                title=None, description=None, media_type=MediaType.COG, roles=["data"]
-            ),
-            "wheat": AssetDefinition.create(
-                title=None, description=None, media_type=MediaType.COG, roles=["data"]
-            ),
-        },
+        "cultivated": AssetDefinition.create(
+            title=None, description=None, media_type=MediaType.COG, roles=["data"]
+        ),
+        "corn": AssetDefinition.create(
+            title=None, description=None, media_type=MediaType.COG, roles=["data"]
+        ),
+        "cotton": AssetDefinition.create(
+            title=None, description=None, media_type=MediaType.COG, roles=["data"]
+        ),
+        "soybean": AssetDefinition.create(
+            title=None, description=None, media_type=MediaType.COG, roles=["data"]
+        ),
+        "wheat": AssetDefinition.create(
+            title=None, description=None, media_type=MediaType.COG, roles=["data"]
+        ),
     },
 }
