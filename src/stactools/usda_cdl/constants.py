@@ -35,10 +35,6 @@ class AssetType(StrEnum):
     Wheat = "wheat"
 
 
-class CollectionType(StrEnum):
-    CDL = "cdl"
-
-
 CLASSIFICATION_SCHEMA = (
     "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
 )

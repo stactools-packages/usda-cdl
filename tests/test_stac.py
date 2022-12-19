@@ -5,7 +5,8 @@ from dateutil.tz import tzutc
 from pystac import MediaType
 
 import stactools.usda_cdl.stac
-from stactools.usda_cdl.constants import CollectionType
+
+# from stactools.usda_cdl.constants import AssetType, COLLECTION_PROPS
 from tests import test_data
 
 
@@ -120,22 +121,8 @@ def test_create_frequency_item_different_years() -> None:
         )
 
 
-def test_create_cdl_collection() -> None:
-    collection = stactools.usda_cdl.stac.create_collection(CollectionType.CDL)
-    assert collection.id == "usda-cdl"
-    collection.set_self_href("")
-    collection.validate()
-
-
-def test_create_cultivated_collection() -> None:
-    collection = stactools.usda_cdl.stac.create_collection(CollectionType.Cultivated)
-    assert collection.id == "usda-cdl-cultivated"
-    collection.set_self_href("")
-    collection.validate()
-
-
-def test_create_frequency_collection() -> None:
-    collection = stactools.usda_cdl.stac.create_collection(CollectionType.Frequency)
-    assert collection.id == "usda-cdl-frequency"
-    collection.set_self_href("")
-    collection.validate()
+# def test_create_collection() -> None:
+# collection = stactools.usda_cdl.stac.create_collection("usda-cdl")
+# assert collection.id == "usda-cdl"
+# collection.set_self_href("")
+# collection.validate()

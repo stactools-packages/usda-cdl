@@ -8,12 +8,7 @@ from pystac import Asset, Collection, Item, MediaType
 from pystac.extensions.item_assets import ItemAssetsExtension
 
 from stactools.usda_cdl import constants
-from stactools.usda_cdl.constants import (
-    ASSET_PROPS,
-    COLLECTION_PROPS,
-    AssetType,
-    CollectionType,
-)
+from stactools.usda_cdl.constants import ASSET_PROPS, COLLECTION_PROPS, AssetType
 
 
 @dataclass(frozen=True)
@@ -91,9 +86,9 @@ def create_cropland_item(
 
     item.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
     asset = item.assets[AssetType.Cropland]
-    asset.extra_fields["classification:classes"] = constants.ASSET_PROPS[
-        AssetType.Cropland
-    ]["classes"]
+    asset.extra_fields["classification:classes"] = ASSET_PROPS[AssetType.Cropland][
+        "classes"
+    ]
 
     return item
 
@@ -117,9 +112,9 @@ def create_cultivated_item(cultivated_href: str) -> Item:
 
     item.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
     asset = item.assets[AssetType.Cultivated]
-    asset.extra_fields["classification:classes"] = constants.ASSET_PROPS[
-        AssetType.Cultivated
-    ]["classes"]
+    asset.extra_fields["classification:classes"] = ASSET_PROPS[AssetType.Cultivated][
+        "classes"
+    ]
 
     return item
 
@@ -160,9 +155,9 @@ def create_frequency_item(
     return item
 
 
-def create_collection(collection_type: AssetType) -> Collection:
+def create_collection(collection_type: str) -> Collection:
     """
-    Creates a STAC Collections for .
+    Creates a STAC Collections for USDA Cropland.
 
     Args:
         collection_type: Desired collection type for the STAC Collections.
