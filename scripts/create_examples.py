@@ -14,7 +14,9 @@ data_files = root / "tests" / "data-files"
 collection = stac.create_collection(COLLECTION_ID)
 for item_type in AssetType:
     if item_type == AssetType.Cropland:
-        item = stac.create_cropland_item(str(data_files / "basic_cropland_2019.tif"))
+        item = stac.create_cropland_item(
+            str(data_files / "basic_cropland_2019.tif"),
+        )
     elif item_type == AssetType.Corn:
         item = stac.create_frequency_item(
             str(data_files / "frequency_corn_2021.tif"),

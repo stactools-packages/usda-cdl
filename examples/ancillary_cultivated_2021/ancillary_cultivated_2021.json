@@ -16,7 +16,7 @@
       130,
       135
     ],
-    "datetime": "2022-12-20T12:22:33.356214Z"
+    "datetime": "2022-12-20T12:46:46.853235Z"
   },
   "geometry": {
     "type": "Polygon",
@@ -95,6 +95,7 @@
   ],
   "stac_extensions": [
     "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
     "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
   ],
   "collection": "usda-cdl"
