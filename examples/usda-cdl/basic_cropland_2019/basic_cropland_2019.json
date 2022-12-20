@@ -18,7 +18,7 @@
     ],
     "start_datetime": "2019-01-01T00:00:00Z",
     "end_datetime": "2019-12-31T23:59:59Z",
-    "created": "2022-12-09T18:31:34.687670Z",
+    "created": "2022-12-20T17:33:58.141619Z",
     "datetime": null
   },
   "geometry": {
@@ -58,13 +58,13 @@
       "rel": "collection",
       "href": "../collection.json",
       "type": "application/json",
-      "title": "USDA Cropland Data Layer (CDL)"
+      "title": "USDA Cropland Data Layers (CDLs)"
     },
     {
       "rel": "parent",
       "href": "../collection.json",
       "type": "application/json",
-      "title": "USDA Cropland Data Layer (CDL)"
+      "title": "USDA Cropland Data Layers (CDLs)"
     }
   ],
   "assets": {

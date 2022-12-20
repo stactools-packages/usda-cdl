@@ -5,7 +5,7 @@ import click
 from click import Command, Group
 
 from stactools.usda_cdl import stac
-from stactools.usda_cdl.constants import AssetType
+from stactools.usda_cdl.constants import COLLECTION_ID
 
 logger = logging.getLogger(__name__)
 
@@ -24,9 +24,9 @@ def create_usda_cdl_command(cli: Group) -> Command:
         "create-collection",
         short_help="Creates a STAC collection",
     )
-    @click.argument("COLLECTION_TYPE")
+    @click.argument("COLLECTION_ID")
     @click.argument("OUTFILE")
-    def create_collection_command(collection_type: str, outfile: str) -> None:
+    def create_collection_command(collection_id: str, outfile: str) -> None:
         """
         Creates a STAC Collection with Items generated from the HREFs listed
         in INFILE. COGs are also generated and stored alongside the Items.
@@ -38,8 +38,8 @@ def create_usda_cdl_command(cli: Group) -> Command:
             infile (str): Text file containing one HREF to a TIFF file per line.
             outfile (str): The filename of the output collection.
         """
-        collection_type = AssetType.from_str(collection_type)
-        collection = stac.create_collection(collection_type)
+        collection_id = COLLECTION_ID
+        collection = stac.create_collection(collection_id)
         collection.set_self_href(outfile)
         collection.validate_all()
         collection.save()

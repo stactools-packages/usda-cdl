@@ -13,19 +13,43 @@
       "rel": "child",
       "href": "./usda-cdl/collection.json",
       "type": "application/json",
-      "title": "USDA Cropland Data Layer (CDL)"
+      "title": "USDA Cropland Data Layers (CDLs)"
     },
     {
       "rel": "child",
-      "href": "./usda-cdl-cultivated/collection.json",
+      "href": "./usda-cdl/collection.json",
       "type": "application/json",
-      "title": "USDA CDL Cultivated"
+      "title": "USDA Cropland Data Layers (CDLs)"
     },
     {
       "rel": "child",
-      "href": "./usda-cdl-frequency/collection.json",
+      "href": "./usda-cdl/collection.json",
       "type": "application/json",
-      "title": "USDA CDL Frequnecy"
+      "title": "USDA Cropland Data Layers (CDLs)"
+    },
+    {
+      "rel": "child",
+      "href": "./usda-cdl/collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
+    },
+    {
+      "rel": "child",
+      "href": "./usda-cdl/collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
+    },
+    {
+      "rel": "child",
+      "href": "./usda-cdl/collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
+    },
+    {
+      "rel": "child",
+      "href": "./usda-cdl/collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
     }
   ],
   "stac_extensions": []

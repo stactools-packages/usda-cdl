@@ -6,9 +6,10 @@ from typing import Optional
 import stactools.core.create
 from pystac import Asset, Collection, Item, MediaType
 from pystac.extensions.item_assets import ItemAssetsExtension
+from pystac.extensions.raster import RasterExtension
 
 from stactools.usda_cdl import constants
-from stactools.usda_cdl.constants import ASSET_PROPS, COLLECTION_PROPS, AssetType
+from stactools.usda_cdl.constants import ASSET_PROPS, AssetType
 
 
 @dataclass(frozen=True)
@@ -155,29 +156,30 @@ def create_frequency_item(
     return item
 
 
-def create_collection(collection_type: str) -> Collection:
+def create_collection(collection_id: str = constants.COLLECTION_ID) -> Collection:
     """
     Creates a STAC Collections for USDA Cropland.
 
     Args:
-        collection_type: Desired collection type for the STAC Collections.
+        collection_id: Desired collection id for the STAC Collections.
 
     Returns:
         Collection: The created STAC Collections.
     """
-    properties = COLLECTION_PROPS[collection_type]
     collection = Collection(
-        id=properties["id"],
-        title=properties["title"],
-        description=properties["description"],
+        id=collection_id,
+        title=constants.COLLECTION_TITLE,
+        description=constants.COLLECTION_DESCRIPTION,
+        license=constants.LICENSE,
         keywords=constants.KEYWORDS,
         providers=constants.PROVIDERS,
-        extent=properties["extent"],
+        extent=constants.EXTENT,
     )
 
     item_assets = ItemAssetsExtension.ext(collection, add_if_missing=True)
-    item_assets.item_assets = properties["item_assets"]
+    item_assets.item_assets = constants.ITEM_ASSETS
 
+    RasterExtension.add_to(collection)
     collection.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
 
     collection.add_links([constants.LANDING_PAGE_LINK])
