@@ -1,7 +1,7 @@
 {
   "type": "Feature",
   "stac_version": "1.0.0",
-  "id": "frequency_corn_2021",
+  "id": "ancillary_cultivated_2021",
   "properties": {
     "proj:epsg": 5070,
     "proj:transform": [
@@ -16,7 +16,7 @@
       130,
       135
     ],
-    "datetime": "2022-12-20T11:33:58.233657Z"
+    "datetime": "2022-12-20T12:22:33.356214Z"
   },
   "geometry": {
     "type": "Polygon",
@@ -48,8 +48,9 @@
   "links": [
     {
       "rel": "root",
-      "href": "../../catalog.json",
-      "type": "application/json"
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
     },
     {
       "rel": "collection",
@@ -65,34 +66,22 @@
     }
   ],
   "assets": {
-    "corn": {
-      "href": "../../../tests/data-files/frequency_corn_2021.tif",
+    "cultivated": {
+      "href": "../../tests/data-files/ancillary_cultivated_2021.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "title": "Corn 2021",
-      "roles": [
-        "data"
-      ]
-    },
-    "cotton": {
-      "href": "../../../tests/data-files/frequency_cotton_2021.tif",
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "title": "Cotton 2021",
-      "roles": [
-        "data"
-      ]
-    },
-    "soybean": {
-      "href": "../../../tests/data-files/frequency_soybean_2021.tif",
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "title": "Soybean 2021",
-      "roles": [
-        "data"
-      ]
-    },
-    "wheat": {
-      "href": "../../../tests/data-files/frequency_wheat_2021.tif",
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "title": "Wheat 2021",
+      "title": "Cultivated 2021",
+      "classification:classes": [
+        {
+          "value": 1,
+          "description": "Non-Cultivated",
+          "color-hint": "000000"
+        },
+        {
+          "value": 2,
+          "description": "Cultivated",
+          "color-hint": "006300"
+        }
+      ],
       "roles": [
         "data"
       ]
@@ -105,7 +94,8 @@
     34.421926
   ],
   "stac_extensions": [
-    "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
   ],
   "collection": "usda-cdl"
 }
