@@ -1,0 +1,111 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "id": "cultivated_2021_-91095_1807575_15000",
+  "properties": {
+    "proj:epsg": 5070,
+    "proj:transform": [
+      30.0,
+      0.0,
+      -91095.0,
+      0.0,
+      -30.0,
+      1807605.0
+    ],
+    "proj:shape": [
+      500,
+      500
+    ],
+    "start_datetime": "2021-01-01T00:00:00Z",
+    "end_datetime": "2021-12-31T23:59:59Z",
+    "datetime": null
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -96.888772,
+          39.154701
+        ],
+        [
+          -96.890413,
+          39.288532
+        ],
+        [
+          -97.06592,
+          39.287154
+        ],
+        [
+          -97.063955,
+          39.153326
+        ],
+        [
+          -96.888772,
+          39.154701
+        ]
+      ]
+    ]
+  },
+  "links": [
+    {
+      "rel": "root",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
+    },
+    {
+      "rel": "collection",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
+    },
+    {
+      "rel": "parent",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
+    }
+  ],
+  "assets": {
+    "cultivated": {
+      "href": "../../tests/data-files/tiles/2021_cultivated_layer_-91095_1807575_15000.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Cultivated 2021",
+      "classification:classes": [
+        {
+          "value": 1,
+          "description": "Non-Cultivated",
+          "color-hint": "000000"
+        },
+        {
+          "value": 2,
+          "description": "Cultivated",
+          "color-hint": "006300"
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0,
+          "data_type": "uint8",
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "bbox": [
+    -97.06592,
+    39.153326,
+    -96.888772,
+    39.288532
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
+  ],
+  "collection": "usda-cdl"
+}

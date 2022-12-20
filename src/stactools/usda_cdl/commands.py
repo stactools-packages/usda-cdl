@@ -8,8 +8,8 @@ import requests
 from click import Command, Group, Path
 from tqdm import tqdm
 
-from stactools.usda_cdl import stac
-from stactools.usda_cdl.constants import COLLECTION_ID
+from stactools.usda_cdl import stac, tile
+from stactools.usda_cdl.tile import DEFAULT_WINDOW_SIZE
 
 logger = logging.getLogger(__name__)
 
@@ -29,90 +29,52 @@ def create_usda_cdl_command(cli: Group) -> Command:
         short_help="Creates a STAC collection",
     )
     @click.argument("OUTFILE")
-    def create_collection_command(collection_id: str, outfile: str) -> None:
+    def create_collection_command(outfile: str) -> None:
         """
         Creates a STAC Collection.
 
         Args:
             outfile (str): The filename of the output collection.
         """
-        collection_id = COLLECTION_ID
-        collection = stac.create_collection(collection_id)
+        collection = stac.create_collection()
         collection.set_self_href(outfile)
-        collection.validate_all()
+        collection.validate()
         collection.save()
 
-    @usda_cdl.command("create-cropland-item", short_help="Creates STAC Cropland Items")
-    @click.argument("INFILE")  # how to handle option file?
-    @click.argument("OUTDIR")
-    def create__cropland_item_command(infile: str, outdir: str) -> None:
+    @usda_cdl.command("create-item", short_help="Creates STAC Cropland Items")
+    @click.argument("HREFS", nargs=-1)
+    @click.argument("OUTFILE", nargs=1)
+    def create_item_command(hrefs: List[str], outfile: str) -> None:
         """
         Creates a STAC Item.
 
         Args:
-            infile (str): HREF of the cropland COG.
-            outdir (str): Directory that will contain the STAC Item.
+            hrefs (str): HREFs to COGs.
+            outfile (str): The output file.
         """
-        item = stac.create_cropland_item(infile)
-        item_path = os.path.join(outdir, f"{item.id}.json")
-        item.set_self_href(item_path)
+        item = stac.create_item_from_hrefs(hrefs)
+        item.set_self_href(outfile)
         item.make_asset_hrefs_relative()
         item.validate()
-        item.save_object()
+        item.save_object(include_self_link=False)
 
-    @usda_cdl.command(
-        "create-cultivated-item", short_help="Creates STAC Cultivated Items"
+    @usda_cdl.command("tile", short_help="Tile a geotiff (zipped or not zipped)")
+    @click.argument("infile")
+    @click.argument("destination")
+    @click.option(
+        "-s",
+        "--size",
+        help="Size, in pixels, of each tile",
+        default=DEFAULT_WINDOW_SIZE,
+        show_default=True,
     )
-    @click.argument("INFILE")
-    @click.argument("OUTDIR")
-    def create__cultivated_item_command(infile: str, outdir: str) -> None:
-        """
-        Creates a STAC Item.
-
-        Args:
-                infile (str): HREF of the cultivated COG.
-                outdir (str): Directory that will contain the STAC Item.
-        """
-        item = stac.create_cultivated_item(infile)
-        item_path = os.path.join(outdir, f"{item.id}.json")
-        item.set_self_href(item_path)
-        item.make_asset_hrefs_relative()
-        item.validate()
-        item.save_object()
-
-    @usda_cdl.command(
-        "create-frequency-item", short_help="Creates STAC Frequnecy Items"
-    )
-    @click.argument("CORN_INFILE")
-    @click.argument("COTTON_INFILE")
-    @click.argument("SOYBEAN_INFILE")
-    @click.argument("WHEAT_INFILE")
-    @click.argument("OUTDIR")
-    def create__frequency_item_command(
-        corn_infile: str,
-        cotton_infile: str,
-        soybean_infile: str,
-        wheat_infile: str,
-        outdir: str,
-    ) -> None:
-        """
-        Creates a STAC Item.
-
-        Args:
-                corn_infile (str): HREF of the corn frequency COG.
-                cotton_infile (str): HREF of the cotton frequency COG.
-                soybean_infile (str): HREF of the soybean frequency COG.
-                wheat_infile (str): HREF of the wheat frequency COG.
-                outdir (str): Directory that will contain the STAC Item.
-        """
-        item = stac.create_frequency_item(
-            corn_infile, cotton_infile, soybean_infile, wheat_infile
-        )
-        item_path = os.path.join(outdir, f"{item.id}.json")
-        item.set_self_href(item_path)
-        item.make_asset_hrefs_relative()
-        item.validate()
-        item.save_object()
+    def tile_file(infile: Path, destination: Path, size: int) -> None:
+        os.makedirs(str(destination), exist_ok=True)
+        infile_as_path = pathlib.Path(str(infile))
+        if infile_as_path.suffix == ".zip":
+            tile.tile_zipfile(infile_as_path, pathlib.Path(str(destination)), size)
+        else:
+            tile.tile_geotiff(infile_as_path, pathlib.Path(str(destination)), size)
 
     @usda_cdl.command("download", short_help="Download zipped source GeoTIFFs")
     @click.argument("years", nargs=-1)

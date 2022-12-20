@@ -1,99 +1,77 @@
 {
-  "type": "Collection",
-  "id": "usda-cdl",
+  "type": "Feature",
   "stac_version": "1.0.0",
-  "description": "The USDA NASS Cropland Data Layers (CDLs) include Cropland, Confidence, Cultivated, and Frequency products. The Cropland product is a crop-specific land cover data layer created annually for the contiguous United States (CONUS). A corresponding Confidence product represents the predicted confidence that is associated with an output pixel. A value of zero indicates low confidence, while a value of 100 indicates high confidence. The Cultivated product identifies cultivated and non-cultivated land cover for CONUS and is based on land cover information derived from the 2017 through 2021 Cropland products. The Frequency product identifies crop specific planting frequency and are based on land cover information derived from the 2008 through 2021 Cropland products. There are currently four individual crop frequency data layers that represent four major crops: corn, cotton, soybeans, and wheat. All products have a 30 meter resolution.",
+  "id": "cropland_2021_-91095_1807575_15000",
+  "properties": {
+    "proj:epsg": 5070,
+    "proj:transform": [
+      30.0,
+      0.0,
+      -91095.0,
+      0.0,
+      -30.0,
+      1807605.0
+    ],
+    "proj:shape": [
+      500,
+      500
+    ],
+    "start_datetime": "2021-01-01T00:00:00Z",
+    "end_datetime": "2021-12-31T23:59:59Z",
+    "datetime": null
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -96.888772,
+          39.154701
+        ],
+        [
+          -96.890413,
+          39.288532
+        ],
+        [
+          -97.06592,
+          39.287154
+        ],
+        [
+          -97.063955,
+          39.153326
+        ],
+        [
+          -96.888772,
+          39.154701
+        ]
+      ]
+    ]
+  },
   "links": [
     {
       "rel": "root",
-      "href": "./collection.json",
+      "href": "../collection.json",
       "type": "application/json",
       "title": "USDA Cropland Data Layers (CDLs)"
     },
     {
-      "rel": "about",
-      "href": "https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php",
-      "title": "Product Landing Page"
+      "rel": "collection",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
     },
     {
-      "rel": "item",
-      "href": "./cultivated_2021_-91095_1822575_15000/cultivated_2021_-91095_1822575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./cultivated_2021_-106095_1807575_15000/cultivated_2021_-106095_1807575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./cultivated_2021_-106095_1822575_15000/cultivated_2021_-106095_1822575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./cultivated_2021_-91095_1807575_15000/cultivated_2021_-91095_1807575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./cropland_2021_-91095_1807575_15000/cropland_2021_-91095_1807575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./cropland_2021_-91095_1822575_15000/cropland_2021_-91095_1822575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./cropland_2021_-106095_1807575_15000/cropland_2021_-106095_1807575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./cropland_2021_-106095_1822575_15000/cropland_2021_-106095_1822575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./frequency_2008-2021_-106095_1822575_15000/frequency_2008-2021_-106095_1822575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./frequency_2008-2021_-91095_1822575_15000/frequency_2008-2021_-91095_1822575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./frequency_2008-2021_-106095_1807575_15000/frequency_2008-2021_-106095_1807575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./frequency_2008-2021_-91095_1807575_15000/frequency_2008-2021_-91095_1807575_15000.json",
-      "type": "application/json"
+      "rel": "parent",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
     }
   ],
-  "stac_extensions": [
-    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
-    "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
-  ],
-  "item_assets": {
+  "assets": {
     "cropland": {
+      "href": "../../tests/data-files/tiles/2021_30m_cdls_-91095_1807575_15000.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "roles": [
-        "data"
-      ],
-      "raster:bands": [
-        {
-          "nodata": 0,
-          "data_type": "uint8",
-          "spatial_resolution": 30
-        }
-      ],
+      "title": "Cropland Data Layer (CDL) 2021",
       "classification:classes": [
         {
           "value": 1,
@@ -760,26 +738,22 @@
           "description": "Barley/Soybeans",
           "color_hint": "256F00"
         }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0,
+          "data_type": "uint8",
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
       ]
     },
     "confidence": {
+      "href": "../../tests/data-files/tiles/2021_30m_confidence_layer_-91095_1807575_15000.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "roles": [
-        "data"
-      ],
-      "raster:bands": [
-        {
-          "nodata": 0,
-          "data_type": "uint8",
-          "spatial_resolution": 30
-        }
-      ]
-    },
-    "cultivated": {
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "roles": [
-        "data"
-      ],
+      "title": "Confidence 2021",
       "raster:bands": [
         {
           "nodata": 0,
@@ -787,108 +761,21 @@
           "spatial_resolution": 30
         }
       ],
-      "classification:classes": [
-        {
-          "value": 1,
-          "description": "Non-Cultivated",
-          "color-hint": "000000"
-        },
-        {
-          "value": 2,
-          "description": "Cultivated",
-          "color-hint": "006300"
-        }
-      ]
-    },
-    "corn": {
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "roles": [
         "data"
-      ],
-      "raster:bands": [
-        {
-          "nodata": 255,
-          "data_type": "uint8",
-          "spatial_resolution": 30
-        }
-      ]
-    },
-    "cotton": {
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "roles": [
-        "data"
-      ],
-      "raster:bands": [
-        {
-          "nodata": 255,
-          "data_type": "uint8",
-          "spatial_resolution": 30
-        }
-      ]
-    },
-    "soybeans": {
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "roles": [
-        "data"
-      ],
-      "raster:bands": [
-        {
-          "nodata": 255,
-          "data_type": "uint8",
-          "spatial_resolution": 30
-        }
-      ]
-    },
-    "wheat": {
-      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
-      "roles": [
-        "data"
-      ],
-      "raster:bands": [
-        {
-          "nodata": 255,
-          "data_type": "uint8",
-          "spatial_resolution": 30
-        }
       ]
     }
   },
-  "title": "USDA Cropland Data Layers (CDLs)",
-  "extent": {
-    "spatial": {
-      "bbox": [
-        [
-          -127.887,
-          -74.158,
-          47.958,
-          23.1496
-        ]
-      ]
-    },
-    "temporal": {
-      "interval": [
-        [
-          "2008-01-01T00:00:00Z",
-          null
-        ]
-      ]
-    }
-  },
-  "license": "proprietary",
-  "keywords": [
-    "Land Cover",
-    "Land Use",
-    "USDA",
-    "Agriculture"
+  "bbox": [
+    -97.06592,
+    39.153326,
+    -96.888772,
+    39.288532
   ],
-  "providers": [
-    {
-      "name": "United States Department of Agriculture - National Agricultural Statistics Service",
-      "roles": [
-        "producer",
-        "licensor"
-      ],
-      "url": "https://www.nass.usda.gov/"
-    }
-  ]
+  "stac_extensions": [
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/classification/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
+  ],
+  "collection": "usda-cdl"
 }
