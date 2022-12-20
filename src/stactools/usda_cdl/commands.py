@@ -1,8 +1,12 @@
 import logging
 import os
+import pathlib
+from typing import List
 
 import click
-from click import Command, Group
+import requests
+from click import Command, Group, Path
+from tqdm import tqdm
 
 from stactools.usda_cdl import stac
 from stactools.usda_cdl.constants import COLLECTION_ID
@@ -115,5 +119,56 @@ def create_usda_cdl_command(cli: Group) -> Command:
         item.make_asset_hrefs_relative()
         item.validate()
         item.save_object()
+
+    @usda_cdl.command("download", short_help="Download zipped source GeoTIFFs")
+    @click.argument("years", nargs=-1)
+    @click.argument("destination", nargs=1)
+    def download(years: List[int], destination: Path) -> None:
+        """Downloads the USDA CDL zip files to the destination directory. It's a
+        lot of data, so this will take a while.
+
+        If you just want to download specific years' data, provide those before
+        the destination directory.
+        """
+        os.makedirs(str(destination), exist_ok=True)
+        if not years:
+            years = list(range(2008, 2022))
+        urls = list()
+        for year in years:
+            if year < 2008 or year > 2021:
+                raise Exception(f"Unsupported CDL year: {year}")
+            urls.append(
+                "https://www.nass.usda.gov/Research_and_Science/Cropland"
+                f"/Release/datasets/{year}_30m_cdls.zip"
+            )
+            if year >= 2017:
+                urls.append(
+                    "https://www.nass.usda.gov/Research_and_Science/Cropland"
+                    f"/Release/datasets/{year}_30m_confidence_layer.zip"
+                )
+            if year == 2021:
+                urls.append(
+                    "https://www.nass.usda.gov/Research_and_Science/Cropland"
+                    "/Release/datasets/2021_Cultivated_Layer.zip"
+                )
+                urls.append(
+                    "https://www.nass.usda.gov/Research_and_Science/Cropland"
+                    "/Release/datasets/Crop_Frequency_2008-2021.zip"
+                )
+        for url in urls:
+            path = pathlib.Path(str(destination)) / os.path.basename(url)
+            if path.exists():
+                print(f"{path} already exists, skipping...")
+                continue
+            response = requests.get(url, stream=True)
+            with tqdm.wrapattr(
+                open(path, "wb"),
+                "write",
+                miniters=1,
+                desc=url.split("/")[-1],
+                total=int(response.headers.get("content-length", 0)),
+            ) as fout:
+                for chunk in response.iter_content(chunk_size=4096):
+                    fout.write(chunk)
 
     return usda_cdl
