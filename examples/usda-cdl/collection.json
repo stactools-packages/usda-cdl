@@ -2,7 +2,7 @@
   "type": "Collection",
   "id": "usda-cdl",
   "stac_version": "1.0.0",
-  "description": "The USDA Cropland Data Layer (CDL) is a crop-specific land cover data layer. The Confidence Layer represents the predicted confidence that is associated with an output pixel. A value of zero would therefore have a low confidence, while a value of 100 would have a very high confidence.",
+  "description": "The USDA NASS Cropland Data Layers (CDLs) include Cropland, Confidence, Cultivated, and Frequency products. The Cropland product is a crop-specific land cover data layer created annually for the contiguous United States (CONUS). A corresponding Confidence product represents the predicted confidence that is associated with an output pixel. A value of zero indicates low confidence, while a value of 100 indicates high confidence. The Cultivated product identifies cultivated and non-cultivated land cover for CONUS and is based on land cover information derived from the 2017 through 2021 Cropland products. The Frequency product identifies crop specific planting frequency and are based on land cover information derived from the 2008 through 2021 Cropland products. There are currently four individual crop frequency data layers that represent four major crops: corn, cotton, soybeans, and wheat. All products have a 30 meter resolution.",
   "links": [
     {
       "rel": "root",
@@ -16,7 +16,7 @@
     },
     {
       "rel": "item",
-      "href": "./basic_cropland_2019/basic_cropland_2019.json",
+      "href": "./frequency_corn_2021/frequency_corn_2021.json",
       "type": "application/json"
     },
     {
@@ -27,6 +27,7 @@
   ],
   "stac_extensions": [
     "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
     "https://stac-extensions.github.io/classification/v1.1.0/schema.json"
   ],
   "item_assets": {
@@ -35,9 +36,39 @@
       "roles": [
         "data"
       ]
+    },
+    "cultivated": {
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ]
+    },
+    "corn": {
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ]
+    },
+    "cotton": {
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ]
+    },
+    "soybean": {
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ]
+    },
+    "wheat": {
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "roles": [
+        "data"
+      ]
     }
   },
-  "title": "USDA Cropland Data Layer (CDL)",
+  "title": "USDA Cropland Data Layers (CDLs)",
   "extent": {
     "spatial": {
       "bbox": [
@@ -58,7 +89,7 @@
       ]
     }
   },
-  "license": "proprietary",
+  "license": "proptietary",
   "keywords": [
     "Land Cover",
     "Land Use",
