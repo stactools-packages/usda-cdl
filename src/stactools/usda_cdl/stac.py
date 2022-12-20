@@ -85,7 +85,9 @@ def create_cropland_item(
         )
         _add_asset(item, confidence_filename)
 
+    RasterExtension.add_to(item)
     item.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
+
     asset = item.assets[AssetType.Cropland]
     asset.extra_fields["classification:classes"] = ASSET_PROPS[AssetType.Cropland][
         "classes"
@@ -104,14 +106,16 @@ def create_cultivated_item(cultivated_href: str) -> Item:
     Returns:
         Item: A STAC Item object.
     """
+    cultivated_filename = Filename.parse(cultivated_href, AssetType.Cultivated)
 
     item = stactools.core.create.item(cultivated_href)
     del item.assets["data"]
 
-    cultivated_filename = Filename.parse(cultivated_href, AssetType.Cultivated)
     _add_asset(item, cultivated_filename)
 
+    RasterExtension.add_to(item)
     item.stac_extensions.append(constants.CLASSIFICATION_SCHEMA)
+
     asset = item.assets[AssetType.Cultivated]
     asset.extra_fields["classification:classes"] = ASSET_PROPS[AssetType.Cultivated][
         "classes"
@@ -152,6 +156,8 @@ def create_frequency_item(
     item = _add_asset(item, cotton_filename)
     item = _add_asset(item, soybean_filename)
     item = _add_asset(item, wheat_filename)
+
+    RasterExtension.add_to(item)
 
     return item
 

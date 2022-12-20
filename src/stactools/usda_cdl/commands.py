@@ -28,18 +28,12 @@ def create_usda_cdl_command(cli: Group) -> Command:
         "create-collection",
         short_help="Creates a STAC collection",
     )
-    @click.argument("COLLECTION_ID")
     @click.argument("OUTFILE")
     def create_collection_command(collection_id: str, outfile: str) -> None:
         """
-        Creates a STAC Collection with Items generated from the HREFs listed
-        in INFILE. COGs are also generated and stored alongside the Items.
-
-        The INFILE should contain only cropland, cultivated, or frequency HREFs.
-        Only a single HREF to a single variable should be listed in the INFILE.
+        Creates a STAC Collection.
 
         Args:
-            infile (str): Text file containing one HREF to a TIFF file per line.
             outfile (str): The filename of the output collection.
         """
         collection_id = COLLECTION_ID
