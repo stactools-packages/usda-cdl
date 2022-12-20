@@ -136,10 +136,16 @@ def create_usda_cdl_command(cli: Group) -> Command:
                 f"/Release/datasets/{year}_30m_cdls.zip"
             )
             if year >= 2017:
-                urls.append(
-                    "https://www.nass.usda.gov/Research_and_Science/Cropland"
-                    f"/Release/datasets/{year}_30m_confidence_layer.zip"
-                )
+                if year == 2021:
+                    urls.append(
+                        "https://www.nass.usda.gov/Research_and_Science/Cropland"
+                        f"/Release/datasets/{year}_30m_Confidence_Layer.zip"
+                    )
+                else:
+                    urls.append(
+                        "https://www.nass.usda.gov/Research_and_Science/Cropland"
+                        f"/Release/datasets/{year}_30m_confidence_layer.zip"
+                    )
             if year == 2021:
                 urls.append(
                     "https://www.nass.usda.gov/Research_and_Science/Cropland"
