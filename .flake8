@@ -1,5 +1,5 @@
 [flake8]
-max-line-length = 100
+max-line-length = 88
 
 ## IGNORES
 
@@ -10,3 +10,4 @@ max-line-length = 100
 # code to it, so let black win.
 
 ignore = E127,W503,W504
+extend-ignore = E203

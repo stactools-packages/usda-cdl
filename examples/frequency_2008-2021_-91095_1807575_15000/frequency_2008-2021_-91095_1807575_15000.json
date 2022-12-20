@@ -1,0 +1,143 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "id": "frequency_2008-2021_-91095_1807575_15000",
+  "properties": {
+    "proj:epsg": 5070,
+    "proj:transform": [
+      30.0,
+      0.0,
+      -91095.0,
+      0.0,
+      -30.0,
+      1807605.0
+    ],
+    "proj:shape": [
+      500,
+      500
+    ],
+    "start_datetime": "2008-01-01T00:00:00Z",
+    "end_datetime": "2021-12-31T23:59:59Z",
+    "datetime": null
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -96.888772,
+          39.154701
+        ],
+        [
+          -96.890413,
+          39.288532
+        ],
+        [
+          -97.06592,
+          39.287154
+        ],
+        [
+          -97.063955,
+          39.153326
+        ],
+        [
+          -96.888772,
+          39.154701
+        ]
+      ]
+    ]
+  },
+  "links": [
+    {
+      "rel": "root",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
+    },
+    {
+      "rel": "collection",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
+    },
+    {
+      "rel": "parent",
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
+    }
+  ],
+  "assets": {
+    "soybeans": {
+      "href": "../../tests/data-files/tiles/crop_frequency_soybeans_2008-2021_-91095_1807575_15000.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Soybeans 2008-2021",
+      "raster:bands": [
+        {
+          "nodata": 255,
+          "data_type": "uint8",
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    },
+    "corn": {
+      "href": "../../tests/data-files/tiles/crop_frequency_corn_2008-2021_-91095_1807575_15000.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Corn 2008-2021",
+      "raster:bands": [
+        {
+          "nodata": 255,
+          "data_type": "uint8",
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    },
+    "wheat": {
+      "href": "../../tests/data-files/tiles/crop_frequency_wheat_2008-2021_-91095_1807575_15000.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Wheat 2008-2021",
+      "raster:bands": [
+        {
+          "nodata": 255,
+          "data_type": "uint8",
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    },
+    "cotton": {
+      "href": "../../tests/data-files/tiles/crop_frequency_cotton_2008-2021_-91095_1807575_15000.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Cotton 2008-2021",
+      "raster:bands": [
+        {
+          "nodata": 255,
+          "data_type": "uint8",
+          "spatial_resolution": 30
+        }
+      ],
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "bbox": [
+    -97.06592,
+    39.153326,
+    -96.888772,
+    39.288532
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
+  ],
+  "collection": "usda-cdl"
+}
