@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from pystac import Catalog, CatalogType
+from pystac import CatalogType
 
 from stactools.usda_cdl import stac
 from stactools.usda_cdl.constants import COLLECTION_ID, AssetType
@@ -11,10 +11,8 @@ root = Path(__file__).parents[1]
 examples = root / "examples"
 data_files = root / "tests" / "data-files"
 
-catalog = Catalog(id="usda-cdl", description="An example catalog for USDA CDL data")
+collection = stac.create_collection(COLLECTION_ID)
 for item_type in AssetType:
-    collection = stac.create_collection(COLLECTION_ID)
-    catalog.add_child(collection)
     if item_type == AssetType.Cropland:
         item = stac.create_cropland_item(str(data_files / "basic_cropland_2019.tif"))
     elif item_type == AssetType.Corn:
@@ -30,6 +28,6 @@ for item_type in AssetType:
         )
     collection.add_item(item)
 
-catalog.normalize_hrefs(str(examples))
-catalog.make_all_asset_hrefs_relative()
-catalog.save(catalog_type=CatalogType.SELF_CONTAINED)
+collection.normalize_hrefs(str(examples))
+collection.make_all_asset_hrefs_relative()
+collection.save(catalog_type=CatalogType.SELF_CONTAINED)

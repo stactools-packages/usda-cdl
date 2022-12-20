@@ -18,7 +18,7 @@
     ],
     "start_datetime": "2019-01-01T00:00:00Z",
     "end_datetime": "2019-12-31T23:59:59Z",
-    "created": "2022-12-20T17:33:58.141619Z",
+    "created": "2022-12-20T18:22:33.302127Z",
     "datetime": null
   },
   "geometry": {
@@ -51,8 +51,9 @@
   "links": [
     {
       "rel": "root",
-      "href": "../../catalog.json",
-      "type": "application/json"
+      "href": "../collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
     },
     {
       "rel": "collection",
@@ -69,7 +70,7 @@
   ],
   "assets": {
     "cropland": {
-      "href": "../../../tests/data-files/basic_cropland_2019.tif",
+      "href": "../../tests/data-files/basic_cropland_2019.tif",
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "Cropland Data Layer (CDL) 2019",
       "classification:classes": [

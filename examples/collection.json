@@ -6,8 +6,9 @@
   "links": [
     {
       "rel": "root",
-      "href": "../catalog.json",
-      "type": "application/json"
+      "href": "./collection.json",
+      "type": "application/json",
+      "title": "USDA Cropland Data Layers (CDLs)"
     },
     {
       "rel": "about",
@@ -16,12 +17,37 @@
     },
     {
       "rel": "item",
+      "href": "./basic_cropland_2019/basic_cropland_2019.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./basic_cropland_2019/basic_cropland_2019.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./ancillary_cultivated_2021/ancillary_cultivated_2021.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
       "href": "./frequency_corn_2021/frequency_corn_2021.json",
       "type": "application/json"
     },
     {
-      "rel": "parent",
-      "href": "../catalog.json",
+      "rel": "item",
+      "href": "./frequency_corn_2021/frequency_corn_2021.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./frequency_corn_2021/frequency_corn_2021.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./frequency_corn_2021/frequency_corn_2021.json",
       "type": "application/json"
     }
   ],
