@@ -8,6 +8,13 @@ def test_tile_cdl(cdl: Path, tmp_path: Path) -> None:
     assert len(paths) == 4
 
 
+def test_tile_cdl_existing_tiles(cdl: Path, tmp_path: Path) -> None:
+    paths = tile.tile_geotiff(
+        cdl, tmp_path, 500, existing_tiles=["2021_30m_cdls_-91095_1807575_15000.tif"]
+    )
+    assert len(paths) == 3
+
+
 def test_tile_confidence(confidence: Path, tmp_path: Path) -> None:
     paths = tile.tile_geotiff(confidence, tmp_path, 500)
     assert len(paths) == 4

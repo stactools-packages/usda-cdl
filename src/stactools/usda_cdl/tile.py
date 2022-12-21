@@ -47,6 +47,7 @@ def tile_zipfile(
     directory: Path,
     size: int = DEFAULT_WINDOW_SIZE,
     max_workers: int = DEFAULT_MAX_WORKERS,
+    existing_tiles: Optional[List[str]] = None,
 ) -> List[Path]:
     """Tiles an input GeoTIFF (wrapped in a zipfile)."""
     if infile.suffix != ".zip":
@@ -54,7 +55,12 @@ def tile_zipfile(
     zip_path = f"zip://{infile}!/{infile.stem}.tif"
     with rasterio.open(zip_path) as dataset:
         return _tile_dataset(
-            dataset, Metadata.from_href(infile.stem), directory, size, max_workers
+            dataset,
+            Metadata.from_href(infile.stem),
+            directory,
+            size,
+            max_workers,
+            existing_tiles or list(),
         )
 
 
@@ -63,11 +69,17 @@ def tile_geotiff(
     directory: Path,
     size: int = DEFAULT_WINDOW_SIZE,
     max_workers: int = DEFAULT_MAX_WORKERS,
+    existing_tiles: Optional[List[str]] = None,
 ) -> List[Path]:
     """Tiles an input GeoTIFF."""
     with rasterio.open(infile) as dataset:
         return _tile_dataset(
-            dataset, Metadata.from_href(str(infile)), directory, size, max_workers
+            dataset,
+            Metadata.from_href(str(infile)),
+            directory,
+            size,
+            max_workers,
+            existing_tiles or list(),
         )
 
 
@@ -77,11 +89,15 @@ def _tile_dataset(
     directory: Path,
     size: int,
     max_workers: int,
+    existing_tiles: List[str],
 ) -> List[Path]:
     windows = _create_windows(dataset, size)
     read_lock = threading.Lock()
 
     def tile(window: Window) -> Optional[Path]:
+        file_name = f"{metadata.stem}_{window.name()}.tif"
+        if file_name in existing_tiles:
+            return None
         rasterio_window = window.rasterio_window()
         with read_lock:
             data = dataset.read(1, window=rasterio_window)
@@ -97,7 +113,7 @@ def _tile_dataset(
             "transform": transform,
             "crs": dataset.crs,
         }
-        path = directory / f"{metadata.stem}_{window.name()}.tif"
+        path = directory / file_name
         with MemoryFile() as memory_file:
             with memory_file.open(**profile) as open_memory_file:
                 open_memory_file.write(data, 1)
