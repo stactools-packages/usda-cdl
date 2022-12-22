@@ -139,5 +139,6 @@
     "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
   ],
-  "collection": "usda-cdl"
+  "collection": "usda-cdl",
+  "usda_cdl:type": "frequency"
 }

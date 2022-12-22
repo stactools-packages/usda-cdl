@@ -76,12 +76,12 @@
         {
           "value": 1,
           "description": "Non-Cultivated",
-          "color-hint": "000000"
+          "color_hint": "000000"
         },
         {
           "value": 2,
           "description": "Cultivated",
-          "color-hint": "006300"
+          "color_hint": "006300"
         }
       ],
       "raster:bands": [
@@ -107,5 +107,6 @@
     "https://stac-extensions.github.io/classification/v1.1.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.1.0/schema.json"
   ],
-  "collection": "usda-cdl"
+  "collection": "usda-cdl",
+  "usda_cdl:type": "cultivated"
 }
