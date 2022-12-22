@@ -75,22 +75,16 @@ def create_collection() -> Collection:
 def create_items_from_tiles(
     tiles: List[str], read_href_modifier: Optional[ReadHrefModifier] = None
 ) -> List[Item]:
-    metadatas: DefaultDict[
-        str, DefaultDict[str, DefaultDict[str, List[Metadata]]]
-    ] = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    metadatas: DefaultDict[str, List[Metadata]] = defaultdict(list)
     for tile in tiles:
         metadata = Metadata.from_href(tile)
         if not metadata.tile:
             raise ValueError(f"Not a tile: {metadata.href}")
-        metadatas[metadata.item_type][metadata.time_descriptor][metadata.tile].append(
-            metadata
-        )
+        metadatas[metadata.item_id].append(metadata)
     items = list()
-    for a in metadatas.values():
-        for b in a.values():
-            for c in b.values():
-                item = _create_item_from_metadatas(c, read_href_modifier)
-                items.append(item)
+    for m in metadatas.values():
+        item = _create_item_from_metadatas(m, read_href_modifier)
+        items.append(item)
     return items
 
 
