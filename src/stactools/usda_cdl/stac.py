@@ -151,7 +151,7 @@ def _create_item_from_metadata(
     item.common_metadata.start_datetime = metadata.start_datetime
     item.common_metadata.end_datetime = metadata.end_datetime
     item.datetime = None
-    item.extra_fields["usda_cdl:type"] = metadata.item_type
+    item.properties["usda_cdl:type"] = metadata.item_type
 
     asset = item.assets.pop("data")
     asset.title = metadata.cog_title
