@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 def create_usda_cdl_command(cli: Group) -> Command:
-    """Creates the stactools-usda-cdl command line utility."""
+    """Creates the `stac usda-cdl` subcommand."""
 
     @cli.group(
         "usda-cdl",
@@ -41,12 +41,15 @@ def create_usda_cdl_command(cli: Group) -> Command:
         collection.validate()
         collection.save()
 
-    @usda_cdl.command("create-item", short_help="Creates STAC Cropland Items")
+    @usda_cdl.command("create-item", short_help="Creates a STAC item")
     @click.argument("HREFS", nargs=-1)
     @click.argument("OUTFILE", nargs=1)
     def create_item_command(hrefs: List[str], outfile: str) -> None:
         """
-        Creates a STAC Item.
+        Creates a STAC Item from the provided hrefs.
+
+        This will error if the time interval or geometries of the assets are not
+        the same.
 
         Args:
             hrefs (str): HREFs to COGs.
@@ -69,6 +72,7 @@ def create_usda_cdl_command(cli: Group) -> Command:
         show_default=True,
     )
     def tile_file(infile: Path, destination: Path, size: int) -> None:
+        """Tiles the input file, placing the tiles in the destination directory."""
         os.makedirs(str(destination), exist_ok=True)
         infile_as_path = pathlib.Path(str(infile))
         if infile_as_path.suffix == ".zip":
@@ -83,8 +87,8 @@ def create_usda_cdl_command(cli: Group) -> Command:
         """Downloads the USDA CDL zip files to the destination directory. It's a
         lot of data, so this will take a while.
 
-        If you just want to download specific years' data, provide those before
-        the destination directory.
+        If you just want to download specific years' data, provide those years
+        on the command line before the destination directory.
         """
         os.makedirs(str(destination), exist_ok=True)
         if not years:

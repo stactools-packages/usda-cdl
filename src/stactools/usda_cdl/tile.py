@@ -20,6 +20,11 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class Window:
+    """A tile window.
+
+    Contains information about the pixel bounds and the coordinate bounds.
+    """
+
     x_min: int
     y_min: int
     x_max: int
@@ -31,9 +36,14 @@ class Window:
     size: int
 
     def name(self) -> str:
+        """Returns this tile's name.
+
+        This is used to group tiles by filename when creating items.
+        """
         return f"{self.x_min}_{self.y_min}_{self.size}"
 
     def rasterio_window(self) -> rasterio.windows.Window:
+        """Returns the rasterio window, for reading data."""
         return rasterio.windows.Window(
             row_off=self.row_off,
             col_off=self.col_off,
