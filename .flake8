@@ -11,3 +11,5 @@ max-line-length = 88
 
 ignore = E127,W503,W504
 extend-ignore = E203
+
+exclude = src/stactools/usda_cdl/constants.py
