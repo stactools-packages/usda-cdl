@@ -35,11 +35,19 @@ def create_item(
 def create_item_from_hrefs(
     hrefs: List[str], read_href_modifier: Optional[ReadHrefModifier] = None
 ) -> Item:
+    """Creates a CDL item from multiple COG hrefs.
+
+    If the assets at those hrefs don't have the same geometry or time window,
+    this will raise a ValueError.
+    """
+
     metadatas = [Metadata.from_href(href) for href in hrefs]
     return _create_item_from_metadatas(metadatas, read_href_modifier)
 
 
 def create_collection() -> Collection:
+    """Creates the USDA-CDL collection."""
+
     collection = Collection(
         COLLECTION_ID,
         COLLECTION_DESCRIPTION,
@@ -75,6 +83,10 @@ def create_collection() -> Collection:
 def create_items_from_tiles(
     tiles: List[str], read_href_modifier: Optional[ReadHrefModifier] = None
 ) -> List[Item]:
+    """Creates multiple items from tiles.
+
+    Tiles are grouped by item id, then merged into a single item.
+    """
     metadatas: DefaultDict[str, List[Metadata]] = defaultdict(list)
     for tile in tiles:
         metadata = Metadata.from_href(tile)

@@ -9,8 +9,11 @@ T = TypeVar("T", bound="StrEnum")
 
 
 class StrEnum(str, Enum):
+    """A string-based enum, that can lookup an enum value from a string."""
+
     @classmethod
     def from_str(cls: Type[T], s: str) -> T:
+        """Look up an enum value by string."""
         for value in cls:
             if value == s:
                 return value
@@ -18,6 +21,12 @@ class StrEnum(str, Enum):
 
 
 class AssetType(StrEnum):
+    """The type of USDA CDL asset.
+
+    The source data use "cdl" instead of "cropland", but we think "cropland" is
+    more descriptive and less confusing.
+    """
+
     Cropland = "cropland"
     Confidence = "confidence"
     Cultivated = "cultivated"
@@ -27,6 +36,7 @@ class AssetType(StrEnum):
     Wheat = "wheat"
 
     def is_frequency(self) -> bool:
+        """Is this asset part of the "frequency" data?"""
         return (
             self == AssetType.Corn
             or self == AssetType.Cotton
