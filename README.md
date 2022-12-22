@@ -64,18 +64,10 @@ Use `stac usda-cdl --help` to see all subcommands and options.
 
 ### Collection
 
-To create a STAC Collection, define the collection type ("cdl", "cultivated","frequency").
-
-Create a collection, e.g. for the cropland product:
+Create a collection:
 
 ```shell
-stac usda-cdl create-collection cdl collection.json
-```
-
-Get information about all options for collection creation:
-
-```shell
-stac usda-cdl create-collection --help
+stac usda-cdl create-collection collection.json
 ```
 
 ### Item
