@@ -22,7 +22,32 @@
     },
     {
       "rel": "item",
+      "href": "./cropland_2021_-91095_1807575_15000/cropland_2021_-91095_1807575_15000.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./frequency_2008-2021_-106095_1822575_15000/frequency_2008-2021_-106095_1822575_15000.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./frequency_2008-2021_-91095_1822575_15000/frequency_2008-2021_-91095_1822575_15000.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
       "href": "./cultivated_2021_-106095_1807575_15000/cultivated_2021_-106095_1807575_15000.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./frequency_2008-2021_-106095_1807575_15000/frequency_2008-2021_-106095_1807575_15000.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./frequency_2008-2021_-91095_1807575_15000/frequency_2008-2021_-91095_1807575_15000.json",
       "type": "application/json"
     },
     {
@@ -33,11 +58,6 @@
     {
       "rel": "item",
       "href": "./cultivated_2021_-91095_1807575_15000/cultivated_2021_-91095_1807575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./cropland_2021_-91095_1807575_15000/cropland_2021_-91095_1807575_15000.json",
       "type": "application/json"
     },
     {
@@ -53,26 +73,6 @@
     {
       "rel": "item",
       "href": "./cropland_2021_-106095_1822575_15000/cropland_2021_-106095_1822575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./frequency_2008-2021_-106095_1822575_15000/frequency_2008-2021_-106095_1822575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./frequency_2008-2021_-91095_1822575_15000/frequency_2008-2021_-91095_1822575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./frequency_2008-2021_-106095_1807575_15000/frequency_2008-2021_-106095_1807575_15000.json",
-      "type": "application/json"
-    },
-    {
-      "rel": "item",
-      "href": "./frequency_2008-2021_-91095_1807575_15000/frequency_2008-2021_-91095_1807575_15000.json",
       "type": "application/json"
     }
   ],
@@ -791,12 +791,12 @@
         {
           "value": 1,
           "description": "Non-Cultivated",
-          "color-hint": "000000"
+          "color_hint": "000000"
         },
         {
           "value": 2,
           "description": "Cultivated",
-          "color-hint": "006300"
+          "color_hint": "006300"
         }
       ]
     },
@@ -858,10 +858,10 @@
     "spatial": {
       "bbox": [
         [
-          -127.887,
-          -74.158,
-          47.958,
-          23.1496
+          -127.887212,
+          22.94027,
+          -65.345507,
+          51.603492
         ]
       ]
     },
@@ -869,7 +869,7 @@
       "interval": [
         [
           "2008-01-01T00:00:00Z",
-          null
+          "2021-12-31T23:59:59Z"
         ]
       ]
     }
