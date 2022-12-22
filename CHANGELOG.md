@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Location of `usda_cdl:type` (it was at the top level, but needed to be in properties).
+
 ## [0.1.0] - 2022-12-22
 
 Initial release
