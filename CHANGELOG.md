@@ -6,20 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Added
+## [0.1.0] - 2022-12-22
 
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
+Initial release
 
 [Unreleased]: <https://github.com/stactools-packages/usda-cdl/tree/main/>
+[0.1.0]: <https://github.com/stactools-packages/usda-cdl/tree/v0.1.0/>
