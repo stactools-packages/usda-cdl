@@ -21,6 +21,8 @@ def test_create_cdl_item(cdl: Path) -> None:
     assert item.common_metadata.end_datetime == datetime.datetime(
         2021, 12, 31, 23, 59, 59, tzinfo=tzutc()
     )
+    assert item.extra_fields["usda_cdl:type"] == "cropland"
+
     assert len(item.assets) == 1
     asset = item.assets["cropland"]
     assert asset.title == "Cropland Data Layer (CDL) 2021"
@@ -43,6 +45,8 @@ def test_create_cdl_item(cdl: Path) -> None:
 def test_create_cdl_item_with_confidence(cdl: Path, confidence: Path) -> None:
     item = stac.create_item_from_hrefs([str(cdl), str(confidence)])
     assert item.id == "cropland_2021"
+    assert item.extra_fields["usda_cdl:type"] == "cropland"
+
     assert len(item.assets) == 2
     asset = item.assets["confidence"]
     assert asset.title == "Confidence 2021"
@@ -54,6 +58,8 @@ def test_create_cdl_item_with_confidence(cdl: Path, confidence: Path) -> None:
 def test_create_cultivated_item(cultivated: Path) -> None:
     item = stac.create_item(str(cultivated))
     assert item.id == "cultivated_2021"
+    assert item.extra_fields["usda_cdl:type"] == "cultivated"
+
     assert len(item.assets) == 1
     asset = item.assets["cultivated"]
     assert asset.title == "Cultivated 2021"
@@ -68,6 +74,8 @@ def test_create_frequency_item(
         [str(corn), str(cotton), str(soybeans), str(wheat)]
     )
     assert item.id == "frequency_2008-2021"
+    assert item.extra_fields["usda_cdl:type"] == "frequency"
+
     assert len(item.assets) == 4
 
     asset = item.assets["corn"]

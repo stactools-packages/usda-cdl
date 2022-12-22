@@ -12,6 +12,9 @@
   - [item-assets](https://github.com/stac-extensions/item-assets)
   - [proj](https://github.com/stac-extensions/projection/)
   - [raster](https://github.com/stac-extensions/raster/)
+- Extra fields:
+  - `usda_cdl:type`: The [item type](#item-types).
+- [Browse the example in human-readable form](https://radiantearth.github.io/stac-browser/#/external/raw.githubusercontent.com/stactools-packages/usda-cdl/main/examples/collection.json)
 
 A stactools package for USDA Cropland Data Layer (CDL) product.
 
