@@ -2,6 +2,7 @@ import datetime
 from pathlib import Path
 from typing import List
 
+import pytest
 from dateutil.tz import tzutc
 from pystac import MediaType
 from pystac.extensions.item_assets import ItemAssetsExtension
@@ -113,3 +114,8 @@ def test_create_items_from_tiles(tiles: List[Path]) -> None:
     assert len(items) == 12
     for item in items:
         item.validate()
+
+
+def test_cant_create_mismatched_item(cdl: Path, corn: Path) -> None:
+    with pytest.raises(ValueError):
+        stac.create_item_from_hrefs([str(cdl), str(corn)])

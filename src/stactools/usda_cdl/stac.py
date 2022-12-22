@@ -122,6 +122,10 @@ def _create_item_from_metadatas(
                 f"end_datetime mismatch: {item.common_metadata.end_datetime}, "
                 f"{base_item.common_metadata.end_datetime}"
             )
+        elif item.id != base_item.id:
+            raise ValueError(
+                f"Component items don't have the same id: {base_item.id}, {item.id}"
+            )
         else:
             for key, asset in item.assets.items():
                 if key in base_item.assets:
