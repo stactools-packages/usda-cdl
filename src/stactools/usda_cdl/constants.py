@@ -307,6 +307,22 @@ PROVIDERS = [
     )
 ]
 EXTENT = Extent(
-    SpatialExtent([[-127.887, -74.158, 47.9580, 23.1496]]),
-    TemporalExtent([[datetime(2008, 1, 1, tzinfo=timezone.utc), None]]),
+    SpatialExtent(
+        [
+            [
+                -127.887212,
+                22.940270,
+                -65.345507,
+                51.603492,
+            ]
+        ]
+    ),
+    TemporalExtent(
+        [
+            [
+                datetime(2008, 1, 1, tzinfo=timezone.utc),
+                datetime(2021, 12, 31, 23, 59, 59, tzinfo=timezone.utc),
+            ]
+        ]
+    ),
 )
