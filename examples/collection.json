@@ -890,5 +890,12 @@
       ],
       "url": "https://www.nass.usda.gov/"
     }
-  ]
+  ],
+  "summaries": {
+    "usda_cdl:type": [
+      "cropland",
+      "frequency",
+      "cultivated"
+    ]
+  }
 }
