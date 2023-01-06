@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- `usda_cdl:type` to the collection summaries ([#14](https://github.com/stactools-packages/usda-cdl/pull/14))
+
 ### Fixed
 
 - Location of `usda_cdl:type` (it was at the top level, but needed to be in properties).
