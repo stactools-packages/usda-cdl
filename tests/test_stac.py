@@ -104,6 +104,11 @@ def test_create_frequency_item(
 def test_create_collection() -> None:
     collection = stac.create_collection()
 
+    summaries = collection.summaries
+    types = summaries.get_list("usda_cdl:type")
+    assert types
+    assert set(types) == {"cropland", "frequency", "cultivated"}
+
     _ = ItemAssetsExtension.ext(collection)
     assert CLASSIFICATION_SCHEMA in collection.stac_extensions
 
