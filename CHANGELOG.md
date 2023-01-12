@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.1.2] - 2023-01-12
+
+### Fixed
+
+- Frequency tiles now use `mode` for their overview resampling ([#16](https://github.com/stactools-packages/usda-cdl/issues/16))
+
 ## [0.1.1] - 2023-01-06
 
 ### Added
@@ -20,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Initial release
 
-[Unreleased]: <https://github.com/stactools-packages/usda-cdl/compare/v0.1.1...main>
+[Unreleased]: <https://github.com/stactools-packages/usda-cdl/compare/v0.1.2...main>
+[0.1.2]: <https://github.com/stactools-packages/usda-cdl/compare/v0.1.1...v0.1.2>
 [0.1.1]: <https://github.com/stactools-packages/usda-cdl/compare/v0.1.0...v0.1.1>
 [0.1.0]: <https://github.com/stactools-packages/usda-cdl/tree/v0.1.0>
