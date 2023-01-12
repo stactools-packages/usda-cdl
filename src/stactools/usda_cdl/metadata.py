@@ -76,7 +76,10 @@ class Metadata:
             "blocksize": 512,
             "driver": "COG",
         }
-        if self.asset_type in (AssetType.Cropland, AssetType.Cultivated):
+        if self.asset_type.is_frequency() or self.asset_type in (
+            AssetType.Cropland,
+            AssetType.Cultivated,
+        ):
             profile["overview_resampling"] = "mode"
         else:
             profile["overview_resampling"] = "average"
