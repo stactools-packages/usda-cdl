@@ -285,6 +285,11 @@ This collection includes Cropland, Confidence, Cultivated, and Frequency product
 """
 LICENSE = "proprietary"
 KEYWORDS = ["Land Cover", "Land Use", "USDA", "Agriculture"]
+LICENSE_LINK = Link(
+    rel="license",
+    target="https://www.nass.usda.gov/Research_and_Science/Cropland/sarsfaqs2.php#Section3_5.0",
+    title="Redistribution information",
+)
 LANDING_PAGE_LINK = Link(
     rel="about",
     target=("https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php"),
