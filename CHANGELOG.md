@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## Added
+
+- A license link ([#18](https://github.com/stactools-packages/usda-cdl/pull/18))
+
 ## [0.1.2] - 2023-01-12
 
 ### Fixed
