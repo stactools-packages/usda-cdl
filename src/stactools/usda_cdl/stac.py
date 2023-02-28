@@ -18,6 +18,7 @@ from .constants import (
     KEYWORDS,
     LANDING_PAGE_LINK,
     LICENSE,
+    LICENSE_LINK,
     PROVIDERS,
     AssetType,
 )
@@ -58,6 +59,7 @@ def create_collection() -> Collection:
         extent=EXTENT,
     )
     collection.add_link(LANDING_PAGE_LINK)
+    collection.add_link(LICENSE_LINK)
     collection.summaries.add("usda_cdl:type", ["cropland", "frequency", "cultivated"])
 
     asset_definitions = {}

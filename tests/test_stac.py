@@ -104,6 +104,13 @@ def test_create_frequency_item(
 def test_create_collection() -> None:
     collection = stac.create_collection()
 
+    link = collection.get_single_link("license")
+    assert link
+    assert link.href == (
+        "https://www.nass.usda.gov/Research_and_Science/"
+        "Cropland/sarsfaqs2.php#Section3_5.0"
+    )
+
     summaries = collection.summaries
     types = summaries.get_list("usda_cdl:type")
     assert types
