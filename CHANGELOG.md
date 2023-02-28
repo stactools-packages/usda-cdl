@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.1.3] - 2023-02-28
+
 ## Added
 
 - A license link ([#18](https://github.com/stactools-packages/usda-cdl/pull/18))
@@ -30,7 +32,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Initial release
 
-[Unreleased]: <https://github.com/stactools-packages/usda-cdl/compare/v0.1.2...main>
+[Unreleased]: <https://github.com/stactools-packages/usda-cdl/compare/v0.1.3...main>
+[0.1.3]: <https://github.com/stactools-packages/usda-cdl/compare/v0.1.2...v0.1.3>
 [0.1.2]: <https://github.com/stactools-packages/usda-cdl/compare/v0.1.1...v0.1.2>
 [0.1.1]: <https://github.com/stactools-packages/usda-cdl/compare/v0.1.0...v0.1.1>
 [0.1.0]: <https://github.com/stactools-packages/usda-cdl/tree/v0.1.0>
