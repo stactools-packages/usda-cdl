@@ -36,7 +36,9 @@ def download_zips(years: List[int], destination: pathlib.Path) -> List[pathlib.P
             )
             # in 2021 they changed the file basename slightly ¯\_(ツ)_/¯
             if year >= 2021:
-                confidence_url = confidence_url.replace("layer", "Layer")
+                confidence_url = confidence_url.replace("layer", "Layer").replace(
+                    "confidence", "Confidence"
+                )
 
             urls.append(confidence_url)
 
