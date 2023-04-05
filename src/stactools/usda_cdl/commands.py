@@ -81,7 +81,7 @@ def create_usda_cdl_command(cli: Group) -> Command:
             tile.tile_geotiff(infile_as_path, pathlib.Path(str(destination)), size)
 
     @usda_cdl.command("download", short_help="Download zipped source GeoTIFFs")
-    @click.argument("years", nargs=-1)
+    @click.argument("years", nargs=-1, type=int)
     @click.argument("destination", nargs=1)
     def download(years: List[int], destination: Path) -> None:
         """Downloads the USDA CDL zip files to the destination directory. It's a
