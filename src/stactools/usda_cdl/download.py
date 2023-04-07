@@ -7,6 +7,13 @@ from tqdm import tqdm
 
 from stactools.usda_cdl.constants import FIRST_AVAILABLE_YEAR, MOST_RECENT_YEAR
 
+URL_BASE = "https://www.nass.usda.gov/Research_and_Science/Cropland/Release/datasets/"
+
+CROPLAND_URL = URL_BASE + "{year}_30m_cdls.zip"
+CONFIDENCE_URL = URL_BASE + "{year}_30m_confidence_layer.zip"
+FREQUENCY_URL = URL_BASE + "Crop_Frequency_{first_year}-{last_year}.zip"
+CULTIVATED_URL = URL_BASE + "{year}_Cultivated_Layer.zip"
+
 
 def download_zips(years: List[int], destination: pathlib.Path) -> List[pathlib.Path]:
     """Download zipped GeoTiffs from USDA
@@ -24,35 +31,25 @@ def download_zips(years: List[int], destination: pathlib.Path) -> List[pathlib.P
     for year in years:
         if year < FIRST_AVAILABLE_YEAR or year > MOST_RECENT_YEAR:
             raise Exception(f"Unsupported CDL year: {year}")
-        urls.append(
-            "https://www.nass.usda.gov/Research_and_Science/Cropland"
-            f"/Release/datasets/{year}_30m_cdls.zip"
-        )
+        urls.append(CROPLAND_URL.format(year=year))
+
         # in 2017 and beyond there is a confidence layer available
         if year >= 2017:
-            confidence_url = (
-                "https://www.nass.usda.gov/Research_and_Science/Cropland"
-                f"/Release/datasets/{year}_30m_confidence_layer.zip"
-            )
+            confidence_url = CONFIDENCE_URL.format(year=year)
             # in 2021 they changed the file basename slightly ¯\_(ツ)_/¯
             if year >= 2021:
-                confidence_url = confidence_url.replace("layer", "Layer").replace(
-                    "confidence", "Confidence"
+                confidence_url = confidence_url.replace(
+                    "confidence_layer", "Confidence_Layer"
                 )
 
             urls.append(confidence_url)
 
-        # each year, a new version of the cumalative (2008-present) "Cultivated"
-        # and "Crop Frequency" layers are generated
-        if year == MOST_RECENT_YEAR:
+        # starting in 2020, the "Cultivated" and cumalative (2008-present)
+        # "Crop Frequency" layers are available
+        if year >= 2020:
+            urls.append(CULTIVATED_URL.format(year=year))
             urls.append(
-                "https://www.nass.usda.gov/Research_and_Science/Cropland"
-                f"/Release/datasets/{MOST_RECENT_YEAR}_Cultivated_Layer.zip"
-            )
-            urls.append(
-                "https://www.nass.usda.gov/Research_and_Science/Cropland"
-                "/Release/datasets/Crop_Frequency_"
-                f"{FIRST_AVAILABLE_YEAR}-{MOST_RECENT_YEAR}.zip"
+                FREQUENCY_URL.format(first_year=FIRST_AVAILABLE_YEAR, last_year=year)
             )
 
     zips = []
