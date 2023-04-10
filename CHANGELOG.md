@@ -6,9 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- portable `download_zips` function for downloading raw data from USDA
+
+- download functionality for 2022 files
+
+### Fixed
+
+- CLI download utility can handle specific years ([#20](https://github.com/stactools-packages/usda-cdl/issues/20))
+
 ## [0.1.3] - 2023-02-28
 
-## Added
+### Added
 
 - A license link ([#18](https://github.com/stactools-packages/usda-cdl/pull/18))
 
