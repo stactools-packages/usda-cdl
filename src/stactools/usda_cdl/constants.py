@@ -325,3 +325,9 @@ EXTENT = Extent(
         ]
     ),
 )
+
+# most recently available year for download
+MOST_RECENT_YEAR = 2022
+
+# first available year for download
+FIRST_AVAILABLE_YEAR = 2008
